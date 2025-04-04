@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://cfbr1rate5nxv"]
 
 [ext_resource type="Texture2D" uid="uid://bx7o6oyiyg8s4" path="res://assets/sprites/Friends/chuvakan.png" id="1_0va0p"]
-[ext_resource type="Script" path="res://global/scenes/PersonajeChuvakan.cs" id="1_v877g"]
+[ext_resource type="Script" path="res://global/scenes/Fighter.cs" id="1_82qgx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_exeqa"]
 atlas = ExtResource("1_0va0p")
@@ -66,12 +66,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Personaje_Chuvakan" type="CharacterBody2D"]
-motion_mode = 1
-script = ExtResource("1_v877g")
+[node name="Chuvakan" type="Node2D"]
+script = ExtResource("1_82qgx")
 
-[node name="Sprites_Chu" type="AnimatedSprite2D" parent="."]
-position = Vector2(92, 102)
+[node name="Sprites" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 1)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_hn8ng")
 animation = &"idle"

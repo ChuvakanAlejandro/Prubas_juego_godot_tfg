@@ -5,11 +5,10 @@ using System;
 public partial class CassandraData : Entity
 {
 	
-	public CassandraData(){
-		Level = 1;
+	public CassandraData(int level){
+		Level = level;
 		
-		Health = 18;
-		Mana = 18;
+		Name = "Cassandra";
 		
 		ControlPlayer = true;
 		Turn = false;
@@ -19,6 +18,9 @@ public partial class CassandraData : Entity
 		TrueDefense = new int[] {4,5,6,7,8,9,10,11,12,13};
 		TrueMana = new int[] {18,21,24,27,30,33,36,39,42,45};
 		TrueSpeed = new int[] {6,7,8,9,10,11,12,13,14,15};
+		
+		Health = TrueHealth[level-1];
+		Mana = TrueMana[level-1];
 	}
 	
 	public override void levelUp(){

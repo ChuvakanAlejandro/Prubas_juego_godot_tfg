@@ -5,11 +5,10 @@ using System;
 public partial class ChuvakanData : Entity
 {
 	
-	public ChuvakanData(){
-		Level = 1;
+	public ChuvakanData(int level){
+		Level = level;
 		
-		Health = 20;
-		Mana = 15;
+		Name = "Alex";
 		
 		ControlPlayer = true;
 		Turn = false;
@@ -19,6 +18,9 @@ public partial class ChuvakanData : Entity
 		TrueDefense = new int[] {5,6,7,8,9,10,11,12,13,14};
 		TrueMana = new int[] {15,17,19,21,23,25,27,29,31,33};
 		TrueSpeed = new int[] {5,7,9,11,13,15,17,19,21,23};
+		
+		Health = TrueHealth[level-1];
+		Mana = TrueMana[level-1];
 	}
 	
 	public override void levelUp(){

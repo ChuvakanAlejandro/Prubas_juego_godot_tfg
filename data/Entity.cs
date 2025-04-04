@@ -3,6 +3,8 @@ using System;
 
 [GlobalClass]
 public partial class Entity : Resource{
+	[Export] public string Name {  get; set; } = "";
+	
 	[Export] public int Level {  get; set; } = 1;
 	
 	[Export] public int Health {  get; set; }= 1;
@@ -14,8 +16,11 @@ public partial class Entity : Resource{
 	[Export] public int DEFBuf {  get; set; }= 0;
 	[Export] public int DEFDeBuf {  get; set; }= 0;
 	
-	[Export] public bool ControlPlayer {  get; set; } = true;
-	[Export] public bool Turn {  get; set; } = true;
+	[Export] public int VELBuf {  get; set; }= 0;
+	[Export] public int VELDeBuf {  get; set; }= 0;
+	
+	[Export] public bool ControlPlayer {  get; set; } = false;
+	[Export] public bool Turn {  get; set; } = false;
 	
 	[Export] public int[] TrueHealth;
 	[Export] public int[] TrueAttack;
@@ -40,10 +45,10 @@ public partial class Entity : Resource{
 		return TrueDefense[Level-1];
 	}
 	public int giveMAXHP(){
-		return TrueAttack[Level-1];
+		return TrueHealth[Level-1];
 	}
 	public int giveMAXMP(){
-		return TrueDefense[Level-1];
+		return TrueMana[Level-1];
 	}
 	public int giveSP(){
 		return TrueSpeed[Level-1];

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bvfqmqycxdc0t"]
 
-[ext_resource type="Script" path="res://global/scenes/PersonajeCassandra.cs" id="1_go8m4"]
+[ext_resource type="Script" path="res://global/scenes/Fighter.cs" id="1_7j8s8"]
 [ext_resource type="Texture2D" uid="uid://bcfyn1nrjhnw0" path="res://assets/sprites/Friends/watona.png" id="1_gtsnh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n2mwq"]
@@ -66,11 +66,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Personaje_Cassandra" type="CharacterBody2D"]
-script = ExtResource("1_go8m4")
+[node name="Cassandra" type="Node2D"]
+script = ExtResource("1_7j8s8")
 
-[node name="Sprites_Cass" type="AnimatedSprite2D" parent="."]
-position = Vector2(91, 101)
+[node name="Sprites" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ukhtx")
 animation = &"idle"

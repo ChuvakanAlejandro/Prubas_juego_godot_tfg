@@ -19,6 +19,8 @@ public partial class MenuBatalla : Control
 	List<Fighter> allylist;
 	List<Fighter> enemieslist;
 	
+	Fighter actor;
+	
 	private bool selectingTarget;
 	private Flecha flecha; // Nodo de la flecha
 	private int currentTargetIndex = 0; // Índice del enemigo seleccionado
@@ -45,11 +47,36 @@ public partial class MenuBatalla : Control
 		bag.Pressed += OnBagButtonDown;
 		guard.Pressed += OnGuardButtonDown;
 		
-		attack.GrabFocus();
-		actingMenu.Visible = true;
+		actingMenu.Visible = false;
 		specialMenu.Visible = false;
 		
 		selectingTarget = false;
+	}
+	
+	public void makeMenuVisible(Fighter f){
+		GD.Print("MakingMenuVisible...");
+		this.prepareTitles(f);
+		this.ChangeMenu(0);
+	}
+	
+	public void prepareTitles(Fighter f){
+		Entity dataf = f.passData();
+		attack.Text = dataf.atqBasico.giveTitulo();
+		mov1.Text = dataf.mov1.giveTitulo();
+		mov2.Text = dataf.mov2.giveTitulo();
+		if(dataf.mov3.moveIsAvailable()){
+			mov3.Text = dataf.mov3.giveTitulo();
+		}else{
+			mov3.Text = "Nivel 2";
+			mov3.Disabled = true;
+		}
+		if(dataf.mov4.moveIsAvailable()){
+			mov4.Text = dataf.mov4.giveTitulo();
+		}else{
+			mov4.Text = "Nivel 3";
+			mov4.Disabled = true;
+		}
+		actor = f;
 	}
 
 	public override void _Process(double delta)

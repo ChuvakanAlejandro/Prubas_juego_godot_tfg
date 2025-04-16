@@ -20,6 +20,9 @@ public partial class FighterTeam : Node2D
 	foreach (Fighter e in GetChildren()){
 		int level = e.passData().ControlPlayer==true ? 1 : rand.Next(1, 4);
 		e.prepareFighter(level);
+		string nodeName = e.Name;
+		nodeName = nodeName.Replace('_', ' '); 
+		e.passData().Name = nodeName;
 		fighters.Add(e);
 		
 		Entity entityData = e.passData();
@@ -39,7 +42,7 @@ public partial class FighterTeam : Node2D
 		GD.Print($"SP: {c.giveSP()}");
 		GD.Print("---------------------------");
 	}
-}
+	}
 	
 	public List<Fighter> giveList(){
 		return fighters;

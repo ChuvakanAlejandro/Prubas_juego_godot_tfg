@@ -28,6 +28,14 @@ public partial class Entity : Resource{
 	[Export] public int[] TrueMana;
 	[Export] public int[] TrueSpeed;
 	
+	public EstadoManager estadoManager = new EstadoManager();
+	
+	public Movimiento atqBasico;
+	public Movimiento mov1;
+	public Movimiento mov2;
+	public Movimiento mov3;
+	public Movimiento mov4;
+	
 	public virtual void levelUp(){
 		Level++;
 	}
@@ -37,6 +45,7 @@ public partial class Entity : Resource{
 	}
 	public void passTurn(){
 		Turn = false;
+		estadoManager.AvanzarTurno();
 	}
 	public int giveDMG(){
 		return TrueAttack[Level-1];

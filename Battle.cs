@@ -49,6 +49,17 @@ public partial class Battle : Node2D
 		
 		turnManager = new TurnManager(allylist, enemieslist);
 		menu_de_pelea.receiveLists(enemieslist,allylist);
+		this.analizeBattle();
+	}
+	
+	public void analizeBattle(){
+		Fighter fig = turnManager.inAction();
+		fig.passData().isMyTurn();
+		while(fig.passData().ControlPlayer == false){
+			turnManager.passTurnToNextFighter();
+			fig = turnManager.inAction();
+		}
+		menu_de_pelea.makeMenuVisible(fig);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

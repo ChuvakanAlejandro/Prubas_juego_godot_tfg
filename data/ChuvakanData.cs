@@ -21,6 +21,9 @@ public partial class ChuvakanData : Entity
 		
 		Health = TrueHealth[level-1];
 		Mana = TrueMana[level-1];
+		
+		atqBasico = new ChuvakanMovimientoBasico();
+		mov1 = new ChuvakanMovimiento1();
 	}
 	
 	public override void levelUp(){

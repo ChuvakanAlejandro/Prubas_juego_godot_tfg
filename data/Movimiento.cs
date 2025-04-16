@@ -13,7 +13,7 @@ public abstract partial class Movimiento{
 	public List<int> objetivos = new List<int>();
 	public int origen;
 	
-	public int num_objetivos = 1; 
+	public int num_objetivos { get; protected set; } = 1; 
 	
 	public int casterLevel = 1;
 	
@@ -27,6 +27,16 @@ public abstract partial class Movimiento{
 	}
 	public void assingLevel(int l){
 		this.casterLevel = l;
+	}
+	public void addTarget(int i){
+		objetivos.Add(i);
+	}
+	public void erraseTarget(){
+		while (objetivos.Count > 0){
+			int last = objetivos[objetivos.Count - 1];
+			Console.WriteLine("Popped: " + last);
+			objetivos.RemoveAt(objetivos.Count - 1);
+		}
 	}
 	
 	public virtual string giveTitulo(){

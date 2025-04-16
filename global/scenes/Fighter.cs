@@ -5,6 +5,7 @@ public partial class Fighter : Node2D
 {
 	private Entity data;
 	private AnimatedSprite2D animSprite;
+	private Tween parpadeoTween;
 
 	private void prepareData(int level){
 		string name = this.Name.ToString();
@@ -50,5 +51,34 @@ public partial class Fighter : Node2D
 	
 	public Entity passData(){
 		return this.data;
+	}
+	
+	public void Parpadear(){
+		// Si ya hay un tween activo, lo eliminamos
+		if (parpadeoTween != null && parpadeoTween.IsValid()){
+			parpadeoTween.Kill();
+			parpadeoTween = null;
+		}
+		parpadeoTween = GetTree().CreateTween();
+		parpadeoTween.SetLoops(-1);
+		// Oscurecer
+		parpadeoTween.TweenProperty(animSprite, "modulate", new Color(0.4f, 0.4f, 0.4f), 0.15f)
+					 .SetTrans(Tween.TransitionType.Sine)
+					 .SetEase(Tween.EaseType.InOut);
+		// Volver a normal
+		parpadeoTween.TweenProperty(animSprite, "modulate", new Color(1f, 1f, 1f), 0.15f)
+					 .SetTrans(Tween.TransitionType.Sine)
+					 .SetEase(Tween.EaseType.InOut);
+	}
+	
+	public void DetenerParpadeo(){
+		if (parpadeoTween != null && parpadeoTween.IsValid())
+		{
+			parpadeoTween.Kill(); // Detiene el tween
+			parpadeoTween = null;
+
+			// (opcional) Restaurar color normal
+			animSprite.Modulate = new Color(1f, 1f, 1f);
+		}
 	}
 }

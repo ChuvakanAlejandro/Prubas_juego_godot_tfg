@@ -11,21 +11,34 @@ public partial class ChuvakanMovimientoBasico : Movimiento{
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		GD.Print("Chuvakan va ha hacer su ataque basico!");
+		int potencia, random_number;
+		potencia = 8 + this.casterLevel;
+		if(this.casterLevel >= 8){
+			potencia = 9 + this.casterLevel;
+			Random rand = new Random();
+			random_number = rand.Next(0, 1001);
+			if(random_number == 0){
+				this.origen.passData().estadoManager.AplicarEstado(Estado.Aturdido,2,0);
+			}else if(random_number >= 250 && random_number <= 500){
+				this.origen.passData().restoreMP((int) this.origen.passData().giveMAXMP()/2);
+			}
+		}
+		GD.Print("Cassandra va ha hacer su ataque basico!");
+		//this.hurtTargets(potencia);
 	}
 	
 	public override string giveTitulo(){
-		if(this.casterLevel < 3){
+		if(this.casterLevel < 8){
 			return "Golpe Improvisado";
 		}else{
 			return "Enfocarse";
 		}
 	}
 	public override string giveDescripcion(){
-		if(this.casterLevel < 9){
+		if(this.casterLevel < 8){
 			return "Un golpe basico que hace daño a un enemigo.";
 		}else{
-			return "Un golpe basico que hace daño a un enemigo. Tiene un 50% de devolver un tercio de maná";
+			return "Un golpe basico que hace daño a un enemigo. Puede tener un efecto secundario.";
 		}
 	}
 	public override bool affectsAllTeam(){
@@ -34,8 +47,8 @@ public partial class ChuvakanMovimientoBasico : Movimiento{
 	public override bool moveIsAvailable(){
 		return true;
 	}
-	public override int giveCost(){
-		return 0;
+	public override bool enoughMana(){
+		return true;
 	}
 	
 }

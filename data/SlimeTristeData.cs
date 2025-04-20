@@ -7,6 +7,8 @@ public partial class SlimeTristeData : EnemyEntity
 	public SlimeTristeData(int level){
 		Level = level;
 		
+		this.estadoManager = new EstadoManager(this);
+		
 		Name = "Slime Triste";
 		
 		Mana = 0;
@@ -22,6 +24,8 @@ public partial class SlimeTristeData : EnemyEntity
 		TrueMana = new int[] {0,0,0,0,0,0,0,0,0,0};
 		TrueSpeed = new int[] {5,6,7,8,9,10,11,12,13,14};
 		Health = TrueHealth[level-1];
+		
+		atqBasico = new SlimeSubditoMovimientoBasico(3);
 	}
 	
 }

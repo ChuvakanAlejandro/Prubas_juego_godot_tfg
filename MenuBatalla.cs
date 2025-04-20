@@ -28,8 +28,10 @@ public partial class MenuBatalla : Control
 	private int currentTargetIndex = 0; // Índice del enemigo seleccionado
 	
 	private int num_selec = 0;
-	private bool[] indexes = {false,false,false,false};
+	private int all_targets_avaible = 0;
+	private bool[] indexes = {false,false,false,false,false,false,false,false};
 	Movimiento mov_actual;
+	private int target_disposition;
 	
 	public override void _Ready()
 	{
@@ -83,13 +85,19 @@ public partial class MenuBatalla : Control
 		if(dataf.mov3.moveIsAvailable()){
 			mov3.Text = dataf.mov3.giveTitulo();
 		}else{
-			mov3.Text = "Nivel 2";
+			mov3.Text = "NIVEL 2";
 			mov3.Disabled = true;
 		}
 		if(dataf.mov4.moveIsAvailable()){
 			mov4.Text = dataf.mov4.giveTitulo();
 		}else{
-			mov4.Text = "Nivel 3";
+			mov4.Text = "NIVEL 3";
+			mov4.Disabled = true;
+		}
+		if(dataf.defBasico.moveIsAvailable()){
+			guard.Text = dataf.defBasico.giveTitulo();
+		}else{
+			mov4.Text = "BLOQUEADO";
 			mov4.Disabled = true;
 		}
 		actor = f;
@@ -101,7 +109,7 @@ public partial class MenuBatalla : Control
 		{
 			ChangeMenu(0);
 		}
-		if (this.selectingTarget)
+		if (this.selectingTarget && target_disposition  != 3)
 		{
 			// Cambiar objetivo con izquierda/derecha
 			if (Input.IsActionJustPressed("ui_left"))
@@ -110,6 +118,11 @@ public partial class MenuBatalla : Control
 				this.ChangeTarget(-1);
 			}
 			else if (Input.IsActionJustPressed("ui_right"))
+			{
+				GD.Print("Flecha visible moviendose a la der");
+				this.ChangeTarget(1);
+			}
+			else if (Input.IsActionJustPressed("ui_up"))
 			{
 				GD.Print("Flecha visible moviendose a la der");
 				this.ChangeTarget(1);
@@ -162,10 +175,7 @@ public partial class MenuBatalla : Control
 	private void OnAttackButtonDown()
 	{
 		GD.Print("Atacar");
-		mov_actual = actor.passData().atqBasico;
-		num_selec = mov_actual.num_objetivos;
-		if(num_selec > enemieslist.Count)
-			num_selec = enemieslist.Count;
+		prepareVariablesForAttack(0);
 		ChangeMenu(2);
 		
 	}
@@ -184,47 +194,78 @@ public partial class MenuBatalla : Control
 	private void OnGuardButtonDown()
 	{
 		GD.Print("Guardia");
+		if(prepareVariablesForAttack(5) == true)
+			ChangeMenu(2);
 	}
 	
 	private void OnMov1ButtonDown(){
 		GD.Print("Especial1");
-		mov_actual = actor.passData().mov1;
-		num_selec = mov_actual.num_objetivos;
-		if(num_selec > enemieslist.Count)
-			num_selec = enemieslist.Count;
-		ChangeMenu(2);
+		if(prepareVariablesForAttack(1) == true)
+			ChangeMenu(2);
 	}
 	
 	private void OnMov2ButtonDown(){
 		GD.Print("Especial2");
-		mov_actual = actor.passData().mov2;
-		num_selec = mov_actual.num_objetivos;
-		if(num_selec > enemieslist.Count)
-			num_selec = enemieslist.Count;
-		ChangeMenu(2);
+		if(prepareVariablesForAttack(2) == true)
+			ChangeMenu(2);
 	}
 	
 	private void OnMov3ButtonDown(){
 		GD.Print("Especial3");
-		mov_actual = actor.passData().mov3;
-		num_selec = mov_actual.num_objetivos;
-		if(num_selec > enemieslist.Count)
-			num_selec = enemieslist.Count;
-		ChangeMenu(2);
+		if(prepareVariablesForAttack(3) == true)
+			ChangeMenu(2);
 	}
 	
 	private void OnMov4ButtonDown(){
 		GD.Print("Especial4");
-		mov_actual = actor.passData().mov4;
-		num_selec = mov_actual.num_objetivos;
-		if(num_selec > enemieslist.Count)
-			num_selec = enemieslist.Count;
-		ChangeMenu(2);
+		if(prepareVariablesForAttack(4) == true)
+			ChangeMenu(2);
 	}
 	
 	private void OnInvButtonDown(){
 		GD.Print("Target CONFIRM");
 		this.ConfirmTarget();
+	}
+	
+	private bool prepareVariablesForAttack(int s){
+		switch(s){
+			case 0:
+				mov_actual = actor.passData().atqBasico;
+				break;
+			case 1:
+				mov_actual = actor.passData().mov1;
+				break;
+			case 2:
+				mov_actual = actor.passData().mov2;
+				break;
+			case 3:
+				mov_actual = actor.passData().mov3;
+				break;
+			case 4:
+				mov_actual = actor.passData().mov4;
+				break;
+			case 5:
+				mov_actual = actor.passData().defBasico;
+				break;
+		}
+		mov_actual.assingCaster(actor);
+		if(!mov_actual.enoughMana())
+			return false;
+		target_disposition = mov_actual.whoAffects();
+		if(target_disposition == 0)
+			GD.Print("target_disposition = ALLY");
+		else if(target_disposition == 1)
+			GD.Print("target_disposition = ENEMY");
+		else if(target_disposition == 2)
+			GD.Print("target_disposition = BOTH");
+		else if(target_disposition == 3)
+			GD.Print("target_disposition = SELF");
+		else
+			GD.PrintErr("target_disposition = IS WRONG!!!");
+		num_selec = mov_actual.num_objetivos;
+		if(num_selec > enemieslist.Count)
+			num_selec = enemieslist.Count;
+		return true;
 	}
 	
 	public void receiveLists(List<Fighter> ene, List<Fighter> ally){
@@ -233,60 +274,153 @@ public partial class MenuBatalla : Control
 	}
 	
 	private void StartTargetSelection(){
-		if (this.enemieslist.Count == 0){
-			GD.PrintErr("No hay enemigos disponibles.");
-			return;
-		}
-		
-		//-----------------------
-		
-		
-		//-----------------------
 		
 		this.selectingTarget = true;
 		// Seleccionar el primer enemigo por defecto
 		currentTargetIndex = 0;
+		switch(target_disposition){
+			case 0:
+				if (this.allylist.Count == 0){
+					GD.PrintErr("No hay enemigos disponibles.");
+					return;
+				}
+				all_targets_avaible = this.allylist.Count;
+				break;
+			case 1:
+				if (this.enemieslist.Count == 0){
+					GD.PrintErr("No hay enemigos disponibles.");
+					return;
+				}
+				all_targets_avaible = this.enemieslist.Count;
+				break;
+			case 2:
+				if (this.allylist.Count == 0){
+					GD.PrintErr("No hay enemigos disponibles.");
+					return;
+				}
+				if (this.enemieslist.Count == 0){
+					GD.PrintErr("No hay enemigos disponibles.");
+					return;
+				}
+				all_targets_avaible = this.allylist.Count + this.enemieslist.Count;
+				break;
+			case 3:
+				while(this.allylist[currentTargetIndex] != actor)
+					currentTargetIndex++;
+				GD.Print($"{this.allylist[currentTargetIndex].Name} SELF");
+				break;
+		}
 		this.MoveArrowToCurrentTarget();
 	}
 	
-	private void ChangeTarget(int direction)
-	{
-		if (this.enemieslist.Count == 0) return;
-		// Mover en el array de enemigos (circular)
-		this.enemieslist[currentTargetIndex].DetenerParpadeo();
-		currentTargetIndex = (currentTargetIndex + direction + this.enemieslist.Count) % this.enemieslist.Count;
-		while(indexes[currentTargetIndex])
-			currentTargetIndex++;
+	private void ChangeTarget(int direction){
+		switch(target_disposition){
+			case 0:
+				this.allylist[currentTargetIndex].DetenerParpadeo();
+				break;
+			case 1:
+				this.enemieslist[currentTargetIndex].DetenerParpadeo();
+				break;
+			case 2:
+				if(currentTargetIndex >= this.enemieslist.Count){
+					this.allylist[currentTargetIndex-this.enemieslist.Count].DetenerParpadeo();
+				}else{
+					this.enemieslist[currentTargetIndex].DetenerParpadeo();
+				}
+				break;
+			default:
+				break;
+		}
+		currentTargetIndex = (currentTargetIndex + direction + all_targets_avaible) % all_targets_avaible;
+		while(indexes[currentTargetIndex]){
+			if(direction > 0){
+				currentTargetIndex++;
+			}else{
+				currentTargetIndex--;
+			}
+			if(currentTargetIndex < 0){
+				currentTargetIndex = all_targets_avaible - 1;
+			}else if(currentTargetIndex >= all_targets_avaible){
+				currentTargetIndex = 0;
+			}
+		}
 		MoveArrowToCurrentTarget();
 	}
 
 	private void MoveArrowToCurrentTarget()
 	{
-		if (this.enemieslist.Count == 0) return;
-
-		Fighter selectedEnemy = this.enemieslist[currentTargetIndex];
-		selectedEnemy.Parpadear();
-		// Mover la flecha sobre el enemigo
-		flecha.MoveArrow(selectedEnemy.GetPosition() + new Vector2(0, 100)); // Ajustar la posición
-		GD.Print("Flecha visible");
-		flecha.ShowArrow(true);
+		switch(target_disposition){
+			case 0: case 3:
+				if (this.enemieslist.Count == 0) return;
+				Fighter selectedAlly = this.allylist[currentTargetIndex];
+				selectedAlly.Parpadear();
+				flecha.MoveArrow(selectedAlly.GetPosition() + new Vector2(0, 100)); // Ajustar la posición
+				flecha.ShowArrow(true);
+				break;
+			case 1:
+				if (this.enemieslist.Count == 0) return;
+				Fighter selectedEnemy = this.enemieslist[currentTargetIndex];
+				selectedEnemy.Parpadear();
+				flecha.MoveArrow(selectedEnemy.GetPosition() + new Vector2(0, 100)); // Ajustar la posición
+				flecha.ShowArrow(true);
+				break;
+			case 2:
+				Fighter selectedFighter;
+				if(currentTargetIndex >= this.enemieslist.Count){
+					selectedFighter = this.allylist[currentTargetIndex-this.enemieslist.Count];
+				}else{
+					selectedFighter = this.enemieslist[currentTargetIndex];
+				}
+				selectedFighter.Parpadear();
+				flecha.MoveArrow(selectedFighter.GetPosition() + new Vector2(0, 100)); // Ajustar la posición
+				flecha.ShowArrow(true);
+				break;
+			default:
+				break;
+		}
 	}
 
 	private void ConfirmTarget()
 	{
-		mov_actual.addTarget(currentTargetIndex);
+		Fighter confirmedTarget;
+		if(currentTargetIndex >= this.enemieslist.Count && target_disposition == 2){
+			confirmedTarget = this.allylist[currentTargetIndex-this.enemieslist.Count];
+		}else{
+			if(target_disposition == 1){
+				if(mov_actual.affectsAllTeam()){
+					foreach(Fighter f in this.enemieslist){
+						if(!f.passData().isDead()){
+							confirmedTarget = f;
+							mov_actual.addTarget(confirmedTarget);
+						}
+					}
+				}else{
+					confirmedTarget = this.enemieslist[currentTargetIndex];
+					mov_actual.addTarget(confirmedTarget);
+				}
+			}else{
+				if(mov_actual.affectsAllTeam()){
+					foreach(Fighter f in this.allylist){
+						if(!f.passData().isDead()){
+							confirmedTarget = f;
+							mov_actual.addTarget(confirmedTarget);
+						}
+					}
+				}else{
+					confirmedTarget = this.allylist[currentTargetIndex];
+					mov_actual.addTarget(confirmedTarget);
+				}
+			}
+		}
 		num_selec--;
-		if(num_selec == 0){
-			foreach (int i in mov_actual.objetivos){
-				this.enemieslist[i].DetenerParpadeo();
-				GD.Print($"¡Enemigo {this.enemieslist[i].Name} seleccionado!");
+		if(num_selec == 0 || mov_actual.affectsAllTeam()){
+			foreach (Fighter f in mov_actual.objetivos){
+				f.DetenerParpadeo();
+				GD.Print($"¡Enemigo {f.Name} seleccionado!");
 			}
 			mov_actual.erraseTarget();
 			selectingTarget = false;
 			flecha.ShowArrow(false);
-			for (int i = 0; i < indexes.Length; i++){
-				indexes[i] = false; 
-			}
 			ChangeMenu(0);
 		}
 		else{

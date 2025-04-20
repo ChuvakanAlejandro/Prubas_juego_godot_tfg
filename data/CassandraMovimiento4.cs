@@ -11,7 +11,24 @@ public partial class CassandraMovimiento4 : Movimiento{
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		GD.Print("Cassandra usa Juicio o Exilio!");
+		int potencia, coste, probabilidad = 30, random_number;
+		Random rand = new Random();
+		random_number = rand.Next(1, 101);
+		if(this.casterLevel < 7){
+			potencia = 10 + this.casterLevel;
+			coste = 10;
+		}else{
+			potencia = 10 + (int) (1.5 * this.casterLevel);
+			coste = 12;
+		}
+		this.origen.passData().removeMP(coste);
+		
+		GD.Print("Cassandra va ha hacer su ataque especial!");
+		//this.hurtTargets(potencia);
+		if(random_number >= 100-probabilidad){
+			this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.DeBuffDMG,1,25);
+			this.objetivos[0].ActualizarIconosEstado();
+		}
 	}
 	
 	public override string giveTitulo(){
@@ -32,17 +49,23 @@ public partial class CassandraMovimiento4 : Movimiento{
 		return false;
 	}
 	public override bool moveIsAvailable(){
-		if(this.casterLevel < 4){
+		if(this.casterLevel < 3){
 			return false;
 		}else{
 			return true;
 		}
 	}
-	public override int giveCost(){
-		if(this.casterLevel < 4){
-			return 10;
+	public override bool enoughMana(){
+		if(this.casterLevel < 7){
+			if(this.origen.passData().giveMP() >= 10){
+				return true;
+			}else
+				return false;
 		}else{
-			return 12;
+			if(this.origen.passData().giveMP() >= 12){
+				return true;
+			}else
+				return false;
 		}
 	}
 	

@@ -24,4 +24,4 @@ size_flags_vertical = 6
 position = Vector2(575, 263)
 
 [node name="Equipo_Aliado" parent="." instance=ExtResource("2_xrflp")]
-position = Vector2(451, 546)
+position = Vector2(566, 547)

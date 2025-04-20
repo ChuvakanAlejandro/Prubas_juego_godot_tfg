@@ -9,6 +9,7 @@ public partial class ChuvakanData : Entity
 		Level = level;
 		
 		Name = "Alex";
+		this.estadoManager = new EstadoManager(this);
 		
 		ControlPlayer = true;
 		Turn = false;
@@ -22,13 +23,23 @@ public partial class ChuvakanData : Entity
 		Health = TrueHealth[level-1];
 		Mana = TrueMana[level-1];
 		
-		atqBasico = new ChuvakanMovimientoBasico();
 		mov1 = new ChuvakanMovimiento1();
+		mov2 = new ChuvakanMovimiento2();
+		mov3 = new ChuvakanMovimiento3();
+		mov4 = new ChuvakanMovimiento4();
+		atqBasico = new ChuvakanMovimientoBasico();
+		defBasico = new ChuvakanMovimientoDefensivo();
 	}
 	
 	public override void levelUp(){
 		Level++;
 		Health += 3;
 		Mana += 2;
+		this.atqBasico.assingLevel(Level);
+		this.mov1.assingLevel(Level);
+		this.mov2.assingLevel(Level);
+		this.mov3.assingLevel(Level);
+		this.mov4.assingLevel(Level);
+		this.defBasico.assingLevel(Level);
 	}
 }

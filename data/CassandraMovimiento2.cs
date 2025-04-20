@@ -11,6 +11,15 @@ public partial class CassandraMovimiento2 : Movimiento{
 	
 	public override void efecto(){
 		//Logica del movimiento;
+		int coste;
+		if(this.casterLevel > 4){	
+			coste = 4;
+		}else{
+			coste = 6;
+		}
+		this.origen.passData().removeMP(coste);
+		this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDMG,2,25);
+		this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDEF,2,25);
 		GD.Print("Cassandra usa Mente tranquila o Paz interior!");
 	}
 	
@@ -34,11 +43,17 @@ public partial class CassandraMovimiento2 : Movimiento{
 	public override bool moveIsAvailable(){
 		return true;
 	}
-	public override int giveCost(){
+	public override bool enoughMana(){
 		if(this.casterLevel < 4){
-			return 4;
+			if(this.origen.passData().giveMP() >= 4){
+				return true;
+			}else
+				return false;
 		}else{
-			return 6;
+			if(this.origen.passData().giveMP() >= 6){
+				return true;
+			}else
+				return false;
 		}
 	}
 	

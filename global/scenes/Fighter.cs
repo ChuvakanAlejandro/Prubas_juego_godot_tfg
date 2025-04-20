@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Fighter : Node2D
 {
@@ -13,6 +14,10 @@ public partial class Fighter : Node2D
 			this.data = new ChuvakanData(level);
 		}else if(name.Contains("Cassandra")){
 			this.data = new CassandraData(level);
+		}else if(name.Contains("Ishimondo")){
+			this.data = new IshimondoData(level);
+		}else if(name.Contains("Vyls")){
+			this.data = new VylsData(level);
 		}else if(name.Contains("Blue_Slime")){
 			this.data = new SlimeInocenteData(level);
 		}else if(name.Contains("Purple_Slime")){
@@ -29,6 +34,9 @@ public partial class Fighter : Node2D
 	public override void _Ready(){
 		animSprite = GetNode<AnimatedSprite2D>("Sprites");
 		this.prepareFighter(1);
+		//this.passData().estadoManager.AplicarEstado(Estado.Evasion,1,0);
+		//this.passData().estadoManager.AplicarEstado(Estado.BuffDEF,1,0);
+		//ActualizarIconosEstado();
 	}
 	
 	public override void _Process(double delta)
@@ -44,13 +52,28 @@ public partial class Fighter : Node2D
 		}
 	}
 	
-	public void prepareFighter(int level)
-	{
+	public void prepareFighter(int level){
 		this.prepareData(level);
 	}
 	
 	public Entity passData(){
 		return this.data;
+	}
+	
+	public void ActualizarIconosEstado(){
+		List<Estado> estados = this.data.estadoManager.GetEstados();
+		List<Texture2D> iconos = new List<Texture2D>();
+
+		foreach (Estado kvp in estados)
+		{
+			Texture2D icono = EstadoHelper.GetIcono(kvp);
+			if (icono != null){
+				iconos.Add(icono);
+			}
+			
+			
+		}
+		GetNode<EstadoDisplay>("Estado_Display").SetIconos(iconos);
 	}
 	
 	public void Parpadear(){

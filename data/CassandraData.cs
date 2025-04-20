@@ -7,6 +7,7 @@ public partial class CassandraData : Entity
 	
 	public CassandraData(int level){
 		Level = level;
+		this.estadoManager = new EstadoManager(this);
 		
 		Name = "Cassandra";
 		
@@ -27,6 +28,7 @@ public partial class CassandraData : Entity
 		mov3 = new CassandraMovimiento3();
 		mov4 = new CassandraMovimiento4();
 		atqBasico = new CassandraMovimientoBasico();
+		defBasico = new CassandraMovimientoDefensivo();
 		
 	}
 	
@@ -34,5 +36,11 @@ public partial class CassandraData : Entity
 		Level++;
 		Health += 2;
 		Mana += 3;
+		this.atqBasico.assingLevel(Level);
+		this.mov1.assingLevel(Level);
+		this.mov2.assingLevel(Level);
+		this.mov3.assingLevel(Level);
+		this.mov4.assingLevel(Level);
+		this.defBasico.assingLevel(Level);
 	}
 }

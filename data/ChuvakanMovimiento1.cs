@@ -11,21 +11,36 @@ public partial class ChuvakanMovimiento1 : Movimiento{
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		GD.Print("Chuvakan usa Motivación o Motivación inspirativa!");
+		int coste;
+		if(this.casterLevel < 3){	
+			coste = 5;
+		}else{
+			coste = 7;
+		}
+		this.origen.passData().removeMP(coste);
+		this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.BuffDMG,1,20);
+		this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.BuffDEF,1,20);
+		this.objetivos[0].ActualizarIconosEstado();
+		if(this.casterLevel >= 3){	
+			this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDMG,2,20);
+			this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDEF,2,20);
+			this.origen.ActualizarIconosEstado();
+		}
+		GD.Print("Chuvakan usa Motivación!");
 	}
 	
 	public override string giveTitulo(){
 		if(this.casterLevel < 3){
 			return "Motivación";
 		}else{
-			return "Motivación inspirativa";
+			return "Motivación inspiradora";
 		}
 	}
 	public override string giveDescripcion(){
 		if(this.casterLevel < 3){
-			return "Movimiento especial que aumenta el ataque y la defensa en un 20% de si mismo o de un compañero activo del grupo en su próximo turno.";
+			return "Alex motiva a uno de sus compañeros lo que aumenta el ataque y la defensa en un 20%.";
 		}else{
-			return "Movimiento especial que aumenta el ataque y la defensa en un 20% de si mismo y de un compañero activo del grupo en sus próximos 2 turnos.";
+			return "Alex motiva a uno de sus compañeros con confianza lo que aumenta el ataque y la defensa en un 20% tanto al aliado como a él";
 		}
 	}
 	public override bool affectsAllTeam(){
@@ -34,11 +49,17 @@ public partial class ChuvakanMovimiento1 : Movimiento{
 	public override bool moveIsAvailable(){
 		return true;
 	}
-	public override int giveCost(){
-		if(this.casterLevel < 4){
-			return 5;
+	public override bool enoughMana(){
+		if(this.casterLevel < 3){
+			if(this.origen.passData().giveMP() >= 5){
+				return true;
+			}else
+				return false;
 		}else{
-			return 7;
+			if(this.origen.passData().giveMP() >= 7){
+				return true;
+			}else
+				return false;
 		}
 	}
 	

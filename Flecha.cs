@@ -18,6 +18,6 @@ public partial class Flecha : Node2D
 	
 	public void MoveArrow(Vector2 position)
 	{
-		Position = position; // Actualizar la posición de la flecha
+		this.Position = position; // Actualizar la posición de la flecha
 	}
 }

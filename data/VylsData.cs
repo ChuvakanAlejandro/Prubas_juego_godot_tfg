@@ -18,7 +18,7 @@ public partial class VylsData : Entity
 		TrueAttack = new int[] {4,6,8,10,12,14,16,18,20,22};
 		TrueDefense = new int[] {7,9,11,13,15,17,19,21,23,25};
 		TrueMana = new int[] {15,17,19,21,23,25,27,29,31,33};
-		TrueSpeed = new int[] {3,4,5,6,7,8,9,10,11,12};
+		TrueSpeed = new int[] {33,4,5,6,7,8,9,10,11,12};
 		
 		Health = TrueHealth[level-1];
 		Mana = TrueMana[level-1];

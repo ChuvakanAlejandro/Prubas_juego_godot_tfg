@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://k8udnpveppdj"]
+
+[ext_resource type="Theme" uid="uid://cgp6bk35e1id3" path="res://ui/ui_battle_theme.tres" id="1_plkmx"]
+
+[node name="Menu_Texto" type="CanvasLayer"]
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(450, 0)
+offset_left = 111.0
+offset_top = 49.0
+offset_right = 561.0
+offset_bottom = 195.0
+theme = ExtResource("1_plkmx")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Movimiento:  [/b]
+Descripcion:
+
+[i]Estados:[/i]
+"

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://mndfxhtvad5s" path="res://global/scenes/enfrentamiento_aleatorio.tscn" id="1_834as"]
 [ext_resource type="Script" path="res://Battle.cs" id="1_r43sx"]
-[ext_resource type="PackedScene" uid="uid://tfj11ryvomcs" path="res://menu_batalla.tscn" id="2_mqco1"]
+[ext_resource type="PackedScene" uid="uid://tfj11ryvomcs" path="res://ui/menu_batalla.tscn" id="2_mqco1"]
 [ext_resource type="PackedScene" uid="uid://dx8tvrk4mw0rl" path="res://global/scenes/equipo_aliado.tscn" id="2_xrflp"]
 
 [node name="Battle" type="Node2D"]

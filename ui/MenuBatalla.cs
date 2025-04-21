@@ -418,6 +418,8 @@ public partial class MenuBatalla : Control
 				f.DetenerParpadeo();
 				GD.Print($"¡Enemigo {f.Name} seleccionado!");
 			}
+			
+			mov_actual.efecto();
 			mov_actual.erraseTarget();
 			selectingTarget = false;
 			flecha.ShowArrow(false);

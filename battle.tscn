@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://01bxomorvpdc"]
+[gd_scene load_steps=6 format=3 uid="uid://01bxomorvpdc"]
 
 [ext_resource type="PackedScene" uid="uid://mndfxhtvad5s" path="res://global/scenes/enfrentamiento_aleatorio.tscn" id="1_834as"]
 [ext_resource type="Script" path="res://Battle.cs" id="1_r43sx"]
 [ext_resource type="PackedScene" uid="uid://tfj11ryvomcs" path="res://ui/menu_batalla.tscn" id="2_mqco1"]
 [ext_resource type="PackedScene" uid="uid://dx8tvrk4mw0rl" path="res://global/scenes/equipo_aliado.tscn" id="2_xrflp"]
+[ext_resource type="PackedScene" uid="uid://k8udnpveppdj" path="res://ui/cuadro_texto.tscn" id="5_6smly"]
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_r43sx")
@@ -25,3 +26,9 @@ position = Vector2(575, 263)
 
 [node name="Equipo_Aliado" parent="." instance=ExtResource("2_xrflp")]
 position = Vector2(566, 547)
+
+[node name="Dialogo" parent="." instance=ExtResource("5_6smly")]
+offset_left = 575.0
+offset_top = 10.0
+offset_right = 575.0
+offset_bottom = 10.0

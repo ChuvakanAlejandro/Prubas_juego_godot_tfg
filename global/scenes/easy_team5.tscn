@@ -6,10 +6,10 @@
 [node name="Easy_Team" type="Node2D"]
 script = ExtResource("1_71yyu")
 
-[node name="Orange_Slime" parent="." instance=ExtResource("2_fk0om")]
+[node name="Slime_naranja" parent="." instance=ExtResource("2_fk0om")]
 position = Vector2(-199, 0)
 
-[node name="Orange_Slime2" parent="." instance=ExtResource("2_fk0om")]
+[node name="Slime_naranja2" parent="." instance=ExtResource("2_fk0om")]
 
-[node name="Orange_Slime3" parent="." instance=ExtResource("2_fk0om")]
+[node name="Slime_naranja3" parent="." instance=ExtResource("2_fk0om")]
 position = Vector2(199, 0)

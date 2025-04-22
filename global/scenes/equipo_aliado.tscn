@@ -9,7 +9,7 @@
 [node name="Equipo_Aliado" type="Node2D"]
 script = ExtResource("1_ecq5b")
 
-[node name="Chuvakan" parent="." instance=ExtResource("1_4kw16")]
+[node name="Alex" parent="." instance=ExtResource("1_4kw16")]
 position = Vector2(-270, 0)
 
 [node name="Cassandra" parent="." instance=ExtResource("2_71rib")]

@@ -9,14 +9,14 @@
 [node name="Easy_Team" type="Node2D"]
 script = ExtResource("1_ynl2m")
 
-[node name="Orange_Slime" parent="." instance=ExtResource("2_cgm36")]
+[node name="Slime_naranja" parent="." instance=ExtResource("2_cgm36")]
 position = Vector2(-350, 0)
 
-[node name="Blue_Slime" parent="." instance=ExtResource("3_nbwme")]
+[node name="Slime_azul" parent="." instance=ExtResource("3_nbwme")]
 position = Vector2(-150, 0)
 
-[node name="Purple_Slime" parent="." instance=ExtResource("2_wt56x")]
+[node name="Slime_morado" parent="." instance=ExtResource("2_wt56x")]
 position = Vector2(150, 0)
 
-[node name="Grey_Slime" parent="." instance=ExtResource("3_30dl8")]
+[node name="Slime_gris" parent="." instance=ExtResource("3_30dl8")]
 position = Vector2(350, 0)

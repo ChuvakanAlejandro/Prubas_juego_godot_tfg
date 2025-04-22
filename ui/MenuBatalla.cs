@@ -33,6 +33,8 @@ public partial class MenuBatalla : Control
 	Movimiento mov_actual;
 	private int target_disposition;
 	
+	private Battle battle_access;
+	
 	public override void _Ready()
 	{
 		attack = GetNode<Button>("Battle_Action/MarginContainer/HBoxContainer/Attack");
@@ -134,6 +136,13 @@ public partial class MenuBatalla : Control
 	{
 		switch (c)
 		{
+			case -1:
+				actingMenu.Visible = false;
+				specialMenu.Visible = false;
+				selecting.Visible = false;
+				flecha.ShowArrow(false);
+				this.selectingTarget = false;
+				break;
 			case 0:
 				actingMenu.Visible = true;
 				specialMenu.Visible = false;
@@ -268,9 +277,10 @@ public partial class MenuBatalla : Control
 		return true;
 	}
 	
-	public void receiveLists(List<Fighter> ene, List<Fighter> ally){
+	public void receiveLists(List<Fighter> ene, List<Fighter> ally, Battle battle){
 		this.allylist = ally;
 		this.enemieslist = ene;
+		this.battle_access = battle;
 	}
 	
 	private void StartTargetSelection(){
@@ -418,12 +428,17 @@ public partial class MenuBatalla : Control
 				f.DetenerParpadeo();
 				GD.Print($"¡Enemigo {f.Name} seleccionado!");
 			}
-			
+			battle_access.prepareDialog(actor, mov_actual);
+			selectingTarget = false;
+			flecha.ShowArrow(false);
+			ChangeMenu(-1);
+			/*
 			mov_actual.efecto();
 			mov_actual.erraseTarget();
 			selectingTarget = false;
 			flecha.ShowArrow(false);
 			ChangeMenu(0);
+			*/
 		}
 		else{
 			indexes[currentTargetIndex] = true;

@@ -10,7 +10,7 @@ public partial class Fighter : Node2D
 
 	private void prepareData(int level){
 		string name = this.Name.ToString();
-		if(name.Contains("Chuvakan")){
+		if(name.Contains("Alex")){
 			this.data = new ChuvakanData(level);
 		}else if(name.Contains("Cassandra")){
 			this.data = new CassandraData(level);
@@ -18,13 +18,13 @@ public partial class Fighter : Node2D
 			this.data = new IshimondoData(level);
 		}else if(name.Contains("Vyls")){
 			this.data = new VylsData(level);
-		}else if(name.Contains("Blue_Slime")){
+		}else if(name.Contains("Slime_azul")){
 			this.data = new SlimeInocenteData(level);
-		}else if(name.Contains("Purple_Slime")){
+		}else if(name.Contains("Slime_morado")){
 			this.data = new SlimeVagoData(level);
-		}else if(name.Contains("Orange_Slime")){
+		}else if(name.Contains("Slime_naranja")){
 			this.data = new SlimeAgresivoData(level);
-		}else if(name.Contains("Grey_Slime")){
+		}else if(name.Contains("Slime_gris")){
 			this.data = new SlimeTristeData(level);
 		}else{
 			GD.Print("No deberia entrar aqui.");

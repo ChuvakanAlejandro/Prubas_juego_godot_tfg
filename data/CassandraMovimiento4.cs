@@ -4,9 +4,13 @@ using System;
 public partial class CassandraMovimiento4 : Movimiento{
 	
 	
-	public CassandraMovimiento4(){
+	public CassandraMovimiento4(int l){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
+		
+		this.hurtful = true;
+		this.prime_status  = new Estado[] {Estado.DeBuffDMG};
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
@@ -26,8 +30,8 @@ public partial class CassandraMovimiento4 : Movimiento{
 		GD.Print("Cassandra va ha hacer su ataque especial!");
 		//this.hurtTargets(potencia);
 		if(random_number >= 100-probabilidad){
-			this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.DeBuffDMG,1,25);
-			this.objetivos[0].ActualizarIconosEstado();
+			//this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.DeBuffDMG,1,25);
+			//this.objetivos[0].ActualizarIconosEstado();
 		}
 	}
 	
@@ -55,18 +59,15 @@ public partial class CassandraMovimiento4 : Movimiento{
 			return true;
 		}
 	}
-	public override bool enoughMana(){
-		if(this.casterLevel < 7){
-			if(this.origen.passData().giveMP() >= 10){
-				return true;
-			}else
-				return false;
+	public override void assingLevel(int l){
+		this.casterLevel = l;
+		if(this.casterLevel >= 7){
+			coste = 12;
+			potencia = 10 + (int) (1.5 * this.casterLevel);
+			this.status = true;
 		}else{
-			if(this.origen.passData().giveMP() >= 12){
-				return true;
-			}else
-				return false;
+			coste = 10;
+			potencia = 10 + this.casterLevel;
 		}
 	}
-	
 }

@@ -4,24 +4,21 @@ using System;
 public partial class CassandraMovimiento3 : Movimiento{
 	
 	
-	public CassandraMovimiento3(){
+	public CassandraMovimiento3(int l) {
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
+		this.hurtful = true;
+		this.status = true;
+		this.prime_status  = new Estado[] {Estado.Sellado};
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		int potencia, coste, curacion;
-		if(this.casterLevel < 6){
-			potencia = 5 + this.casterLevel;
-			coste = 4;
-		}else{
-			potencia = 5 + (int) (1.5 * this.casterLevel);
-			coste = 7;
-		}
 		this.origen.passData().removeMP(coste);
-		this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.Sellado,1,0);
-		this.objetivos[0].ActualizarIconosEstado();
+		//this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.Sellado,1,0);
+		//this.objetivos[0].ActualizarIconosEstado();
+		//this.putEffectsOnTargets(100, prime_status, 2, 25);
 		GD.Print("Cassandra va ha hacer su ataque especial!");
 		//curacion = (int) (this.hurtTargets(potencia) / 2);
 		if(this.casterLevel <= 6){
@@ -53,17 +50,14 @@ public partial class CassandraMovimiento3 : Movimiento{
 			return true;
 		}
 	}
-	public override bool enoughMana(){
-		if(this.casterLevel < 6){
-			if(this.origen.passData().giveMP() >= 5){
-				return true;
-			}else
-				return false;
+	public override void assingLevel(int l){
+		this.casterLevel = l;
+		if(this.casterLevel >= 6){
+			coste = 6;
+			potencia = 5 + (int) (1.5 * this.casterLevel);
 		}else{
-			if(this.origen.passData().giveMP() >= 10){
-				return true;
-			}else
-				return false;
+			coste = 4;
+			potencia = 5 + this.casterLevel;
 		}
 	}
 	

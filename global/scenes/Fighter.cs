@@ -10,7 +10,7 @@ public partial class Fighter : Node2D
 
 	private void prepareData(int level){
 		string name = this.Name.ToString();
-		if(name.Contains("Alex")){
+		if(name.Contains("Alex") || name.Contains("Chuvakan")){
 			this.data = new ChuvakanData(level);
 		}else if(name.Contains("Cassandra")){
 			this.data = new CassandraData(level);
@@ -104,4 +104,6 @@ public partial class Fighter : Node2D
 			animSprite.Modulate = new Color(1f, 1f, 1f);
 		}
 	}
+	
+	
 }

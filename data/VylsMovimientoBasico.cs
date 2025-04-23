@@ -5,7 +5,7 @@ public partial class VylsMovimientoBasico : Movimiento{
 	
 	
 	
-	public VylsMovimientoBasico(){
+	public VylsMovimientoBasico() : base(){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
 	}

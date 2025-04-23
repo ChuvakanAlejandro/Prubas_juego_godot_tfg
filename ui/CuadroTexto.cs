@@ -16,13 +16,13 @@ public partial class CuadroTexto : Control
 
 	public override void _Ready()
 	{
-		customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		customSignals.OnDialogRequested += ShowDialog;
+		//customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		//customSignals.OnDialogRequested += ShowDialog;
 		panel = GetNode<Panel>("Panel");
 		label = GetNode<Label>("Panel/MarginContainer/Label");
 		label.Text = "";
 		panel.Visible = false;
-		customSignals.OnDialogRequested += ShowDialog;
+		//customSignals.OnDialogRequested += ShowDialog;
 	}
 
 	public override void _Process(double delta)

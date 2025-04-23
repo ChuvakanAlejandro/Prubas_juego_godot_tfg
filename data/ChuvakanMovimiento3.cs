@@ -4,7 +4,7 @@ using System;
 public partial class ChuvakanMovimiento3 : Movimiento{
 	
 	
-	public ChuvakanMovimiento3(){
+	public ChuvakanMovimiento3() : base(){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
 	}

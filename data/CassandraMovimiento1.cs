@@ -4,21 +4,15 @@ using System;
 public partial class CassandraMovimiento1 : Movimiento{
 	
 	
-	public CassandraMovimiento1(){
+	public CassandraMovimiento1(int l){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 2;
+		hurtful = true;
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		int potencia, coste;
-		if(this.casterLevel > 4){
-			potencia = 8 + this.casterLevel;
-			coste = 4;
-		}else{
-			potencia = 7 + this.casterLevel;
-			coste = 7;
-		}
 		this.origen.passData().removeMP(coste);
 		GD.Print("Cassandra va ha hacer su ataque especial!");
 		//this.hurtTargets(potencia);
@@ -48,18 +42,14 @@ public partial class CassandraMovimiento1 : Movimiento{
 	public override bool moveIsAvailable(){
 		return true;
 	}
-	public override bool enoughMana(){
-		if(this.casterLevel < 4){
-			if(this.origen.passData().giveMP() >= 4){
-				return true;
-			}else
-				return false;
+	public override void assingLevel(int l){
+		this.casterLevel = l;
+		if(this.casterLevel >= 4){
+			potencia = 8 + this.casterLevel;
+			coste = 7;
 		}else{
-			if(this.origen.passData().giveMP() >= 7){
-				return true;
-			}else
-				return false;
+			potencia = 7 + this.casterLevel;
+			coste = 4;
 		}
 	}
-	
 }

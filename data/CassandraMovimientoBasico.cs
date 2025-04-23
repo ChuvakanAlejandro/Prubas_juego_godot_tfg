@@ -4,15 +4,16 @@ using System;
 public partial class CassandraMovimientoBasico : Movimiento{
 	
 	
-	public CassandraMovimientoBasico(){
+	public CassandraMovimientoBasico(int l){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
+		this.hurtful = true;
+		this.status = false;
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		int potencia;
-		potencia = 10 + this.casterLevel;
 		if(this.casterLevel >= 5){
 			this.origen.passData().restoreMP((int) this.origen.passData().giveMAXMP()/6);
 		}
@@ -40,8 +41,11 @@ public partial class CassandraMovimientoBasico : Movimiento{
 	public override bool moveIsAvailable(){
 		return true;
 	}
-	public override bool enoughMana(){
-		return true;
+	public override void assingLevel(int l){
+		this.casterLevel = l;
+		coste = 0;
+		potencia = 10 + this.casterLevel;
 	}
+
 	
 }

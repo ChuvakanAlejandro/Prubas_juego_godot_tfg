@@ -4,7 +4,7 @@ using System;
 public partial class IshimondoMovimiento2 : Movimiento{
 	
 	
-	public IshimondoMovimiento2(){
+	public IshimondoMovimiento2()  : base(){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
 	}

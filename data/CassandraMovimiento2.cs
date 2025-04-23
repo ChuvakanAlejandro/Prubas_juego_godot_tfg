@@ -4,22 +4,18 @@ using System;
 public partial class CassandraMovimiento2 : Movimiento{
 	
 	
-	public CassandraMovimiento2(){
+	public CassandraMovimiento2(int l){
 		this.effectObj = Effect_Obj.Self;
 		this.num_objetivos = 1;
+		this.status = true;
+		this.prime_status  = new Estado[] {Estado.BuffDMG,Estado.BuffDEF};
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		int coste;
-		if(this.casterLevel > 4){	
-			coste = 4;
-		}else{
-			coste = 6;
-		}
 		this.origen.passData().removeMP(coste);
-		this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDMG,2,25);
-		this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDEF,2,25);
+		//this.putEffectsOnTargets(100, prime_status, 2, 25);
 		GD.Print("Cassandra usa Mente tranquila o Paz interior!");
 	}
 	
@@ -43,17 +39,12 @@ public partial class CassandraMovimiento2 : Movimiento{
 	public override bool moveIsAvailable(){
 		return true;
 	}
-	public override bool enoughMana(){
-		if(this.casterLevel < 4){
-			if(this.origen.passData().giveMP() >= 4){
-				return true;
-			}else
-				return false;
+	public override void assingLevel(int l){
+		this.casterLevel = l;
+		if(this.casterLevel >= 4){
+			coste = 6;
 		}else{
-			if(this.origen.passData().giveMP() >= 6){
-				return true;
-			}else
-				return false;
+			coste = 4;
 		}
 	}
 	

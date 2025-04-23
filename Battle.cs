@@ -88,6 +88,7 @@ public partial class Battle : Node2D
 			dialogo += $"{dialogo} y {movimientoUsado.objetivos[i].passData().Name}";
 		}
 		GD.Print("Dialogo preparado.");
-		customSignals.EmitSignal(nameof(CustomSignals.OnDialogRequested), dialogo);
+		dialog.ShowDialog(dialogo);
+		//customSignals.EmitSignal(nameof(CustomSignals.OnDialogRequested), dialogo);
 	}
 }

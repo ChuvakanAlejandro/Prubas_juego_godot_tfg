@@ -9,7 +9,6 @@ public partial class ChuvakanData : Entity
 		Level = level;
 		
 		Name = "Alex";
-		this.estadoManager = new EstadoManager(this);
 		
 		ControlPlayer = true;
 		Turn = false;
@@ -35,11 +34,11 @@ public partial class ChuvakanData : Entity
 		Level++;
 		Health += 3;
 		Mana += 2;
-		this.atqBasico.assingLevel(Level);
-		this.mov1.assingLevel(Level);
-		this.mov2.assingLevel(Level);
-		this.mov3.assingLevel(Level);
-		this.mov4.assingLevel(Level);
-		this.defBasico.assingLevel(Level);
+		this.atqBasico.assingLevel(this.Level);
+		this.mov1.assingLevel(this.Level);
+		this.mov2.assingLevel(this.Level);
+		this.mov3.assingLevel(this.Level);
+		this.mov4.assingLevel(this.Level);
+		this.defBasico.assingLevel(this.Level);
 	}
 }

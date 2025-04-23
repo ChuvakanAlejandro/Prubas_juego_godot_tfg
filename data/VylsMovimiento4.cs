@@ -4,7 +4,7 @@ using System;
 public partial class VylsMovimiento4 : Movimiento{
 	
 	
-	public VylsMovimiento4(){
+	public VylsMovimiento4() : base(){
 		this.effectObj = Effect_Obj.Ally;
 		this.num_objetivos = 1;
 	}

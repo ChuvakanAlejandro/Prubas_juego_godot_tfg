@@ -4,7 +4,7 @@ using System;
 public partial class VylsMovimientoDefensivo : Movimiento{
 	
 	
-	public VylsMovimientoDefensivo(){
+	public VylsMovimientoDefensivo()  : base(){
 		this.effectObj = Effect_Obj.Self;
 		this.num_objetivos = 1;
 	}

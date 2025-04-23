@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://ui/CuadroTexto.cs" id="1_w0f7q"]
 
 [sub_resource type="SystemFont" id="SystemFont_j0x0d"]
+subpixel_positioning = 0
 
 [node name="Dialogo" type="Control"]
 layout_mode = 3

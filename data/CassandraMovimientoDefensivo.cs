@@ -4,9 +4,12 @@ using System;
 public partial class CassandraMovimientoDefensivo : Movimiento{
 	
 	
-	public CassandraMovimientoDefensivo(){
+	public CassandraMovimientoDefensivo(int l) : base(){
 		this.effectObj = Effect_Obj.Self;
 		this.num_objetivos = 1;
+		
+		this.status = true;
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
@@ -20,8 +23,9 @@ public partial class CassandraMovimientoDefensivo : Movimiento{
 			def_ptg = 20;
 		}
 		this.origen.passData().restoreMP(recuperacion_MP);
-		this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDEF,2,def_ptg);
-		this.origen.ActualizarIconosEstado();
+		//this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDEF,2,def_ptg);
+		//this.origen.ActualizarIconosEstado();
+		//this.putEffectsOnTargets(100, prime_status, 2, 25);
 		GD.Print("Cassandra va ha defenderse este turno!");
 	}
 	
@@ -39,9 +43,6 @@ public partial class CassandraMovimientoDefensivo : Movimiento{
 		return false;
 	}
 	public override bool moveIsAvailable(){
-		return true;
-	}
-	public override bool enoughMana(){
 		return true;
 	}
 	

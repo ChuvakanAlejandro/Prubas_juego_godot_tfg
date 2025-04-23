@@ -15,6 +15,7 @@ public abstract partial class Movimiento{
 	
 	public int coste = 0;
 	public int potencia = 0;
+	public int evolucion = 0;
 	
 	public bool hurtful = false;
 	public bool status = false;
@@ -88,7 +89,7 @@ public abstract partial class Movimiento{
 		actual_prob = (int) aux;
 		for(int i = 0; i < objetivos.Count; i++){
 			random_number = rand.Next(1, num_max+1);
-			if(actual_prob > num_max){
+			if(actual_prob + random_number > num_max){
 				for(int j = 0; j < e.Length; j++){
 					this.objetivos[i].passData().estadoManager.AplicarEstado(e[j],dur,ptg);
 					if(!afectados.ContainsKey(objetivos[i].passData().Name))

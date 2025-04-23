@@ -7,7 +7,7 @@ public partial class ChuvakanMovimiento1 : Movimiento{
 	public ChuvakanMovimiento1(int l) {
 		this.effectObj = Effect_Obj.Ally;
 		this.num_objetivos = 1;
-		
+		this.evolucion = 4;
 		this.hurtful = false;
 		this.status = true;
 		this.prime_status  = new Estado[] {Estado.BuffDMG,Estado.BuffDEF};
@@ -57,14 +57,14 @@ public partial class ChuvakanMovimiento1 : Movimiento{
 	}
 	
 	public override string giveTitulo(){
-		if(this.casterLevel < 3){
+		if(this.casterLevel < this.evolucion){
 			return "Motivación";
 		}else{
 			return "Motivación inspiradora";
 		}
 	}
 	public override string giveDescripcion(){
-		if(this.casterLevel < 3){
+		if(this.casterLevel < this.evolucion){
 			return "Alex motiva a uno de sus compañeros lo que aumenta el ataque y la defensa en un 20%.";
 		}else{
 			return "Alex motiva a uno de sus compañeros con confianza lo que aumenta el ataque y la defensa en un 20% tanto al aliado como a él";
@@ -78,7 +78,7 @@ public partial class ChuvakanMovimiento1 : Movimiento{
 	}
 	public override void assingLevel(int l){
 		this.casterLevel = l;
-		if(this.casterLevel >= 3){
+		if(this.casterLevel >= this.evolucion){
 			coste = 7;
 		}else{
 			coste = 5;

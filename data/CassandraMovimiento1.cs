@@ -7,6 +7,7 @@ public partial class CassandraMovimiento1 : Movimiento{
 	public CassandraMovimiento1(int l){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 2;
+		this.evolucion = 4;
 		hurtful = true;
 		assingLevel(l);
 	}
@@ -19,21 +20,21 @@ public partial class CassandraMovimiento1 : Movimiento{
 	}
 	
 	public override string giveTitulo(){
-		if(this.casterLevel < 4){
+		if(this.casterLevel < evolucion){
 			return "Brecha umbría";
 		}else{
 			return "Ruptura";
 		}
 	}
 	public override string giveDescripcion(){
-		if(this.casterLevel < 4){
+		if(this.casterLevel < evolucion){
 			return "Ataque especial que ataca a dos enemigos haciendo daño moderado.";
 		}else{
 			return "Movimiento especial que ataca a todos enemigos haciendo daño moderado.";
 		}
 	}
 	public override bool affectsAllTeam(){
-		if(this.casterLevel < 4){
+		if(this.casterLevel < evolucion){
 			return false;
 		}else{
 			return true;
@@ -44,7 +45,7 @@ public partial class CassandraMovimiento1 : Movimiento{
 	}
 	public override void assingLevel(int l){
 		this.casterLevel = l;
-		if(this.casterLevel >= 4){
+		if(this.casterLevel >= evolucion){
 			potencia = 8 + this.casterLevel;
 			coste = 7;
 		}else{

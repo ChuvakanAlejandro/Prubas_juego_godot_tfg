@@ -7,7 +7,7 @@ public partial class ChuvakanMovimiento3 : Movimiento{
 	public ChuvakanMovimiento3(int l){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
-		
+		this.evolucion = 38;
 		this.hurtful = true;
 		this.prime_status  = new Estado[] {Estado.Aturdido};
 		assingLevel(l);
@@ -29,14 +29,14 @@ public partial class ChuvakanMovimiento3 : Movimiento{
 	}
 	
 	public override string giveTitulo(){
-		if(this.casterLevel < 3){
+		if(this.casterLevel < this.evolucion){
 			return "Mazo personal";
 		}else{
 			return "Mola Mazo";
 		}
 	}
 	public override string giveDescripcion(){
-		if(this.casterLevel < 3){
+		if(this.casterLevel < this.evolucion){
 			return "Alex dibuja su arma favorita y la hace realidad para hacer gran daño a un enemigo.";
 		}else{
 			return "Alex dibuja su arma favorita y la hace realidad para hacer gran daño a un enemigo. Este ataque puede aturdir al objetivo";
@@ -54,7 +54,7 @@ public partial class ChuvakanMovimiento3 : Movimiento{
 	}
 	public override void assingLevel(int l){
 		this.casterLevel = l;
-		if(this.casterLevel >= 8){
+		if(this.casterLevel >= this.evolucion){
 			coste = 9;
 			potencia = 12 + this.casterLevel;
 			this.status = true;

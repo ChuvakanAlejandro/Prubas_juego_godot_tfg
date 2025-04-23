@@ -4,25 +4,25 @@ using System;
 public partial class IshimondoMovimiento1 : Movimiento{
 	
 	
-	public IshimondoMovimiento1() : base(){
+	public IshimondoMovimiento1(int l){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
+		this.evolucion = 5;
+		this.hurtful = true;
+		this.status = false;
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		int potencia, potencia_total = 0, coste, random_number, limite, garantizado, count=0, num_mayor = 5;
+		int  potencia_total = 0, random_number, limite, garantizado, count=0, num_mayor = 5;
 		bool dentro = true;
 		Random rand = new Random();
-		if(this.casterLevel >= 5){	
-			coste = 7;
-			potencia = 4;
+		if(this.casterLevel >= this.evolucion){	
 			limite = 7;
 			garantizado = 3;
 			
 		}else{
-			coste = 4;
-			potencia = 4;
 			limite = 5;
 			garantizado = 2;
 		}
@@ -67,14 +67,14 @@ public partial class IshimondoMovimiento1 : Movimiento{
 		return formula;
 	}
 	public override string giveTitulo(){
-		if(this.casterLevel < 5){
+		if(this.casterLevel < this.evolucion){
 			return "Golpes voraces";
 		}else{
 			return "Ráfaga voraz";
 		}
 	}
 	public override string giveDescripcion(){
-		if(this.casterLevel < 5){
+		if(this.casterLevel < this.evolucion){
 			return "Ishimondo ataca repetidas vesces al enemigo haciendole daño. El número de ataques puede variar.";
 		}else{
 			return "Ishimondo ataca repetidas vesces al enemigo haciendole daño. El número de ataques puede variar.";
@@ -86,17 +86,13 @@ public partial class IshimondoMovimiento1 : Movimiento{
 	public override bool moveIsAvailable(){
 		return true;
 	}
-	public override bool enoughMana(){
-		if(this.casterLevel < 5){
-			if(this.origen.passData().giveMP() >= 4){
-				return true;
-			}else
-				return false;
+	public override void assingLevel(int l){
+		this.casterLevel = l;
+		this.potencia 4;
+		if(this.casterLevel >= this.evolucion){
+			coste = 7;
 		}else{
-			if(this.origen.passData().giveMP() >= 7){
-				return true;
-			}else
-				return false;
+			coste = 4;
 		}
 	}
 	

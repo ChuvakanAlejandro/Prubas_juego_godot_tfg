@@ -7,7 +7,7 @@ public partial class CassandraMovimientoDefensivo : Movimiento{
 	public CassandraMovimientoDefensivo(int l) : base(){
 		this.effectObj = Effect_Obj.Self;
 		this.num_objetivos = 1;
-		
+		this.evolucion = 5;
 		this.status = true;
 		assingLevel(l);
 	}
@@ -15,7 +15,7 @@ public partial class CassandraMovimientoDefensivo : Movimiento{
 	public override void efecto(){
 		//Logica del movimiento;
 		int recuperacion_MP, def_ptg;
-		if(this.casterLevel < 5){
+		if(this.casterLevel < this.evolucion){
 			recuperacion_MP = (int) this.origen.passData().giveMAXMP()/3;
 			def_ptg = 10;
 		}else{
@@ -30,7 +30,7 @@ public partial class CassandraMovimientoDefensivo : Movimiento{
 	}
 	
 	public override string giveTitulo(){
-		if(this.casterLevel < 5){
+		if(this.casterLevel < this.evolucion){
 			return "Pantalla";
 		}else{
 			return "Reflejo";

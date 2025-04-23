@@ -7,7 +7,7 @@ public partial class ChuvakanMovimiento4 : Movimiento{
 	public ChuvakanMovimiento4(int l){
 		this.effectObj = Effect_Obj.Ally;
 		this.num_objetivos = 1;
-		
+		this.evolucion = 9;
 		this.status = true;
 		this.prime_status  = new Estado[] {Estado.BuffDMG,Estado.Creacion};
 		assingLevel(l);
@@ -31,14 +31,14 @@ public partial class ChuvakanMovimiento4 : Movimiento{
 	}
 	
 	public override string giveTitulo(){
-		if(this.casterLevel < 3){
+		if(this.casterLevel < this.evolucion){
 			return "Lluvia de ideas";
 		}else{
 			return "Dibujo compartido";
 		}
 	}
 	public override string giveDescripcion(){
-		if(this.casterLevel < 9){
+		if(this.casterLevel < this.evolucion){
 			return "Alex usa su cuaderno para otorgar una bendicion a sus compañeros. Esta bendición aumenta el ataque de todos sus aliados en un 10 porciento ademas de otorgarles Explosion creativa en sus proximos turnos.";
 		}else{
 			return "Alex usa su cuaderno para otorgar una bendicion a sus compañeros. Esta bendición aumenta el ataque de todos sus aliados en un 20 porciento ademas de otorgarles Explosion creativa y Ultimo estrector proximos turnos.";
@@ -56,7 +56,7 @@ public partial class ChuvakanMovimiento4 : Movimiento{
 	}
 	public override void assingLevel(int l){
 		this.casterLevel = l;
-		if(this.casterLevel >= 9){
+		if(this.casterLevel >= this.evolucion){
 			coste = 13;
 		}else{
 			coste = 9;

@@ -7,7 +7,7 @@ public partial class ChuvakanMovimientoDefensivo : Movimiento{
 	public ChuvakanMovimientoDefensivo(int l){
 		this.effectObj = Effect_Obj.Self;
 		this.num_objetivos = 1;
-		
+		this.evolucion = 5;
 		this.status = true;
 		assingLevel(l);
 	}
@@ -15,7 +15,7 @@ public partial class ChuvakanMovimientoDefensivo : Movimiento{
 	public override void efecto(){
 		//Logica del movimiento;
 		int recuperacion_MP, def_ptg;
-		if(this.casterLevel < 5){
+		if(this.casterLevel < this.evolucion){
 			recuperacion_MP = (int) this.origen.passData().giveMAXMP()/4;
 			def_ptg = 15;
 		}else{
@@ -30,7 +30,7 @@ public partial class ChuvakanMovimientoDefensivo : Movimiento{
 	}
 	
 	public override string giveTitulo(){
-		if(this.casterLevel < 5){
+		if(this.casterLevel < this.evolucion){
 			return "Escudo dibujado";
 		}else{
 			return "Escudo detallado";

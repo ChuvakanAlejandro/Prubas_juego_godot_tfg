@@ -4,30 +4,28 @@ using System;
 public partial class ChuvakanMovimiento3 : Movimiento{
 	
 	
-	public ChuvakanMovimiento3() : base(){
+	public ChuvakanMovimiento3(int l){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
+		
+		this.hurtful = true;
+		this.prime_status  = new Estado[] {Estado.Aturdido};
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
-		int potencia, coste, probabilidad = 30, random_number;
-		Random rand = new Random();
-		random_number = rand.Next(1, 101);
-		if(this.casterLevel < 7){
-			potencia = 11 + this.casterLevel;
-			coste = 5;
-		}else{
-			potencia = 12 + this.casterLevel;
-			coste = 9;
-		}
+		int probabilidad = 30, random_number;
+		//Random rand = new Random();
+		//random_number = rand.Next(1, 101);
 		this.origen.passData().removeMP(coste);
 		
 		GD.Print("Alex va ha hacer su ataque especial!");
 		//this.hurtTargets(potencia);
-		if(random_number >= 100-probabilidad){
-			this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.Aturdido,1,0);
-			this.objetivos[0].ActualizarIconosEstado();
-		}
+		//this.putEffectsOnTargets(probabilidad, prime_status, 1, 0);
+		//if(random_number >= 100-probabilidad){
+			//this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.Aturdido,1,0);
+			//this.objetivos[0].ActualizarIconosEstado();
+		//}
 	}
 	
 	public override string giveTitulo(){
@@ -54,17 +52,15 @@ public partial class ChuvakanMovimiento3 : Movimiento{
 			return true;
 		}
 	}
-	public override bool enoughMana(){
-		if(this.casterLevel < 8){
-			if(this.origen.passData().giveMP() >= 5){
-				return true;
-			}else
-				return false;
+	public override void assingLevel(int l){
+		this.casterLevel = l;
+		if(this.casterLevel >= 8){
+			coste = 9;
+			potencia = 12 + this.casterLevel;
+			this.status = true;
 		}else{
-			if(this.origen.passData().giveMP() >= 9){
-				return true;
-			}else
-				return false;
+			potencia = 11 + this.casterLevel;
+			coste = 9;
 		}
 	}
 	

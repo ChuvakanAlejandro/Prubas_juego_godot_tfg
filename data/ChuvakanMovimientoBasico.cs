@@ -4,17 +4,21 @@ using System;
 public partial class ChuvakanMovimientoBasico : Movimiento{
 	
 	
-	public ChuvakanMovimientoBasico() : base(){
+	public ChuvakanMovimientoBasico(int l) {
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
+		
+		this.hurtful = true;
+		this.status = false;
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		int potencia, random_number;
+		int random_number;
 		potencia = 8 + this.casterLevel;
-		if(this.casterLevel >= 8){
-			potencia = 9 + this.casterLevel;
+		//this.hurtTargets(potencia);
+		/*if(this.casterLevel >= 8){
 			Random rand = new Random();
 			random_number = rand.Next(0, 1001);
 			if(random_number == 0){
@@ -23,7 +27,8 @@ public partial class ChuvakanMovimientoBasico : Movimiento{
 				this.origen.passData().restoreMP((int) this.origen.passData().giveMAXMP()/2);
 			}
 		}
-		GD.Print("Cassandra va ha hacer su ataque basico!");
+		*/
+		GD.Print("Chuvakan va ha hacer su ataque basico!");
 		//this.hurtTargets(potencia);
 	}
 	
@@ -47,8 +52,16 @@ public partial class ChuvakanMovimientoBasico : Movimiento{
 	public override bool moveIsAvailable(){
 		return true;
 	}
-	public override bool enoughMana(){
-		return true;
+	public override void assingLevel(int l){
+		this.casterLevel = l;
+		coste = 0;
+		if(this.casterLevel >= 8){
+			potencia = 9 + this.casterLevel;
+		}else{
+			potencia = 8 + this.casterLevel;
+		}
+		
 	}
+	
 	
 }

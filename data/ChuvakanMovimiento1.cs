@@ -17,7 +17,7 @@ public partial class ChuvakanMovimiento1 : Movimiento{
 	public override void efecto(){
 		//Logica del movimiento;
 		this.origen.passData().removeMP(coste);
-		//this.putEffectsOnTargets(100, prime_status, 2, 25);
+		//this.putEffectsOnTargets(100, prime_status, 1, 20);
 		//this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.BuffDMG,1,20);
 		//this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.BuffDEF,1,20);
 		//this.objetivos[0].ActualizarIconosEstado();

@@ -4,13 +4,16 @@ using System;
 public partial class ChuvakanMovimiento4 : Movimiento{
 	
 	
-	public ChuvakanMovimiento4() : base(){
+	public ChuvakanMovimiento4(int l){
 		this.effectObj = Effect_Obj.Ally;
 		this.num_objetivos = 1;
+		
+		this.status = true;
+		this.prime_status  = new Estado[] {Estado.BuffDMG,Estado.Creacion};
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
-		int coste;
 		if(this.casterLevel < 7){
 			coste = 9;
 		}else{
@@ -51,17 +54,12 @@ public partial class ChuvakanMovimiento4 : Movimiento{
 			return true;
 		}
 	}
-	public override bool enoughMana(){
-		if(this.casterLevel < 9){
-			if(this.origen.passData().giveMP() >= 9){
-				return true;
-			}else
-				return false;
+	public override void assingLevel(int l){
+		this.casterLevel = l;
+		if(this.casterLevel >= 9){
+			coste = 13;
 		}else{
-			if(this.origen.passData().giveMP() >= 13){
-				return true;
-			}else
-				return false;
+			coste = 9;
 		}
 	}
 	

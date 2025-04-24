@@ -8,9 +8,6 @@ public partial class ChuvakanMovimiento2 : Movimiento{
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
 		this.evolucion = 3;
-		this.hurtful = true;
-		this.status = true;
-		this.prime_status  = new Estado[] {Estado.DeBuffDEF};
 		assingLevel(l);
 	}
 	
@@ -18,12 +15,8 @@ public partial class ChuvakanMovimiento2 : Movimiento{
 		//Logica del movimiento;
 		this.origen.passData().removeMP(coste);
 		GD.Print("Alex va ha hacer su ataque especial!");
-		//this.hurtTargets(potencia);
-		//for(int i = 0; i < objetivos.Count; i++){
-			//this.objetivos[i].passData().estadoManager.AplicarEstado(Estado.DeBuffDEF,2,10);
-			//this.objetivos[i].ActualizarIconosEstado();
-		//}
-		//this.putEffectsOnTargets(100, prime_status, 2, 10);
+		this.hurtTargets(potencia);
+		this.putEffectsOnTargets(100, Estado.DeBuffDEF, 2, 10);
 	}
 	
 	public override string giveTitulo(){
@@ -52,6 +45,7 @@ public partial class ChuvakanMovimiento2 : Movimiento{
 	}
 	public override void assingLevel(int l){
 		this.casterLevel = l;
+		potencia = 4;
 		if(this.casterLevel >= this.evolucion){
 			coste = 7;
 		}else{

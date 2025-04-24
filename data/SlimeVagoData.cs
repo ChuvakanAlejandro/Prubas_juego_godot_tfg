@@ -26,7 +26,7 @@ public partial class SlimeVagoData : EnemyEntity
 		
 		Health = TrueHealth[level-1];
 		
-		atqBasico = new SlimeSubditoMovimientoBasico(1);
+		atqBasico = new SlimeSubditoMovimientoBasico(1,Level);
 	}
 	
 }

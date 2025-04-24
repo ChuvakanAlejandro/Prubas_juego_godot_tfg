@@ -8,7 +8,6 @@ public partial class CassandraMovimiento1 : Movimiento{
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 2;
 		this.evolucion = 4;
-		hurtful = true;
 		assingLevel(l);
 	}
 	
@@ -16,7 +15,7 @@ public partial class CassandraMovimiento1 : Movimiento{
 		//Logica del movimiento;
 		this.origen.passData().removeMP(coste);
 		GD.Print("Cassandra va ha hacer su ataque especial!");
-		//this.hurtTargets(potencia);
+		this.hurtTargets(potencia);
 	}
 	
 	public override string giveTitulo(){
@@ -46,10 +45,10 @@ public partial class CassandraMovimiento1 : Movimiento{
 	public override void assingLevel(int l){
 		this.casterLevel = l;
 		if(this.casterLevel >= evolucion){
-			potencia = 8 + this.casterLevel;
+			potencia = 6;
 			coste = 7;
 		}else{
-			potencia = 7 + this.casterLevel;
+			potencia = 5;
 			coste = 4;
 		}
 	}

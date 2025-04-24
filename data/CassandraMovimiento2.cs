@@ -8,15 +8,14 @@ public partial class CassandraMovimiento2 : Movimiento{
 		this.effectObj = Effect_Obj.Self;
 		this.num_objetivos = 1;
 		this.evolucion = 4;
-		this.status = true;
-		this.prime_status  = new Estado[] {Estado.BuffDMG,Estado.BuffDEF};
 		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
 		this.origen.passData().removeMP(coste);
-		//this.putEffectsOnTargets(100, prime_status, 2, 25);
+		this.putEffectsOnTargets(100, Estado.BuffDMG, 2, 25);
+		this.putEffectsOnTargets(100, Estado.BuffDEF, 2, 25);
 		GD.Print("Cassandra usa Mente tranquila o Paz interior!");
 	}
 	

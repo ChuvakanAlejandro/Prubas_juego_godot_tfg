@@ -7,25 +7,17 @@ public partial class ChuvakanMovimiento3 : Movimiento{
 	public ChuvakanMovimiento3(int l){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
-		this.evolucion = 38;
-		this.hurtful = true;
-		this.prime_status  = new Estado[] {Estado.Aturdido};
+		this.evolucion = 8;
 		assingLevel(l);
 	}
 	
 	public override void efecto(){
-		int probabilidad = 30, random_number;
-		//Random rand = new Random();
-		//random_number = rand.Next(1, 101);
+		int prob = 30;
 		this.origen.passData().removeMP(coste);
-		
 		GD.Print("Alex va ha hacer su ataque especial!");
-		//this.hurtTargets(potencia);
-		//this.putEffectsOnTargets(probabilidad, prime_status, 1, 0);
-		//if(random_number >= 100-probabilidad){
-			//this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.Aturdido,1,0);
-			//this.objetivos[0].ActualizarIconosEstado();
-		//}
+		this.hurtTargets(potencia);
+		if(this.casterLevel >= this.evolucion)
+			this.putEffectsOnTargets(prob, Estado.Aturdido, 1, 0);
 	}
 	
 	public override string giveTitulo(){
@@ -56,10 +48,9 @@ public partial class ChuvakanMovimiento3 : Movimiento{
 		this.casterLevel = l;
 		if(this.casterLevel >= this.evolucion){
 			coste = 9;
-			potencia = 12 + this.casterLevel;
-			this.status = true;
+			potencia = 9;
 		}else{
-			potencia = 11 + this.casterLevel;
+			potencia = 8;
 			coste = 9;
 		}
 	}

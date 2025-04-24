@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Linq;
+using System.Collections.Generic; 
 
 public partial class ChuvakanMovimiento4 : Movimiento{
 	
@@ -8,25 +10,35 @@ public partial class ChuvakanMovimiento4 : Movimiento{
 		this.effectObj = Effect_Obj.Ally;
 		this.num_objetivos = 1;
 		this.evolucion = 9;
-		this.status = true;
-		this.prime_status  = new Estado[] {Estado.BuffDMG,Estado.Creacion};
 		assingLevel(l);
 	}
 	
 	public override void efecto(){
-		if(this.casterLevel < 7){
-			coste = 9;
-		}else{
-			coste = 13;
-		}
 		this.origen.passData().removeMP(coste);
 		GD.Print("Alex va ha hacer su ataque especial!");
-		for(int i = 0; i < objetivos.Count; i++){
-			this.objetivos[i].passData().estadoManager.AplicarEstado(Estado.BuffDMG,1,10);
-			this.objetivos[i].passData().estadoManager.AplicarEstado(Estado.Creacion,1,0);
-			this.objetivos[i].ActualizarIconosEstado();
+		putEffectsOnTargets(100,Estado.BuffDMG,1,10);
+		putEffectsOnTargets(100,Estado.Creacion,1,0);
+	}
+	public override void putEffectsOnTargets(double proba, Estado e, int dur, int ptg){
+		Random rand = new Random();
+		int num_max = 100, actual_prob, random_number;
+		double aux = proba;
+		while(aux < 1){
+			aux *= 10;
+			num_max *= 10;
 		}
-		this.origen.passData().estadoManager.AplicarEstado(Estado.Creacion,2,0);
+		actual_prob = (int) aux;
+		for(int i = 0; i < objetivos.Count; i++){
+			random_number = rand.Next(1, num_max+1);
+			if(actual_prob + random_number > num_max){
+					this.objetivos[i].passData().estadoManager.AplicarEstado(e,dur,ptg);
+					this.objetivos[i].ActualizarIconosEstado();
+					if(!afectados.ContainsKey(objetivos[i].passData().Name))
+						afectados[objetivos[i].passData().Name] = new List<Estado>();
+					afectados[objetivos[i].passData().Name].Add(e);
+			}
+		}
+		this.origen.passData().estadoManager.AplicarEstado(e,dur+1,0);
 		this.origen.ActualizarIconosEstado();
 	}
 	

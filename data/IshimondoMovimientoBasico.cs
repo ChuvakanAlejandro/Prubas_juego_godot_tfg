@@ -4,24 +4,19 @@ using System;
 public partial class IshimondoMovimientoBasico : Movimiento{
 	
 	
-	public IshimondoMovimientoBasico() : base(){
+	public IshimondoMovimientoBasico(int l){
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
+		this.evolucion = 3;
+		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		int potencia;
-		if(this.casterLevel < 3)
-			potencia = 9 + this.casterLevel;
-		else
-			potencia = 11 + this.casterLevel;
-	
 		GD.Print("Ishimondo va ha hacer su ataque basico!");
-		//this.hurtTargets(potencia);
-		if(this.casterLevel >= 3){
-			this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.Sangrado,1,0);
-			this.objetivos[0].ActualizarIconosEstado();
+		this.hurtTargets(potencia);
+		if(this.casterLevel >= this.evolucion){
+			this.putEffectsOnTargets(100, Estado.Sangrado, 3, 50);
 		}
 	}
 	
@@ -49,14 +44,14 @@ public partial class IshimondoMovimientoBasico : Movimiento{
 		return formula;
 	}
 	public override string giveTitulo(){
-		if(this.casterLevel < 3){
+		if(this.casterLevel < this.evolucion){
 			return "Arañazo";
 		}else{
 			return "Mordisco";
 		}
 	}
 	public override string giveDescripcion(){
-		if(this.casterLevel < 3){
+		if(this.casterLevel < this.evolucion){
 			return "Ishimondo se abalanza delante de un enemigo para arañarlo haciendole daño.";
 		}else{
 			return "Ishimondo se abalanza delante de un enemigo y le muerde fuertemente haciendo que este sangre.";
@@ -68,8 +63,15 @@ public partial class IshimondoMovimientoBasico : Movimiento{
 	public override bool moveIsAvailable(){
 		return true;
 	}
-	public override bool enoughMana(){
-		return true;
+	public override void assingLevel(int l){
+		this.casterLevel = l;
+		coste = 0;
+		if(this.casterLevel >= this.evolucion){
+			potencia = 8;
+		}else{
+			potencia = 9;
+		}
+		
 	}
 	
 }

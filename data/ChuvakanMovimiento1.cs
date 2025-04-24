@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Linq;
+using System.Collections.Generic; 
 
 public partial class ChuvakanMovimiento1 : Movimiento{
 	
@@ -8,27 +10,17 @@ public partial class ChuvakanMovimiento1 : Movimiento{
 		this.effectObj = Effect_Obj.Ally;
 		this.num_objetivos = 1;
 		this.evolucion = 4;
-		this.hurtful = false;
-		this.status = true;
-		this.prime_status  = new Estado[] {Estado.BuffDMG,Estado.BuffDEF};
 		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
 		this.origen.passData().removeMP(coste);
-		//this.putEffectsOnTargets(100, prime_status, 1, 20);
-		//this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.BuffDMG,1,20);
-		//this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.BuffDEF,1,20);
-		//this.objetivos[0].ActualizarIconosEstado();
-		//if(this.casterLevel >= 3){	
-		//	this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDMG,2,20);
-		//	this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDEF,2,20);
-		//	this.origen.ActualizarIconosEstado();
-		//}
+		this.putEffectsOnTargets(100, Estado.BuffDMG, 1, 20);
+		this.putEffectsOnTargets(100, Estado.BuffDEF, 1, 20);
 		GD.Print("Chuvakan usa Motivación!");
 	}
-	public override void putEffectsOnTargets(double proba, Estado[] e, int dur, int ptg){
+	public override void putEffectsOnTargets(double proba, Estado e, int dur, int ptg){
 		Random rand = new Random();
 		int num_max = 100, actual_prob, random_number;
 		double aux = proba;
@@ -40,17 +32,15 @@ public partial class ChuvakanMovimiento1 : Movimiento{
 		for(int i = 0; i < objetivos.Count; i++){
 			random_number = rand.Next(1, num_max+1);
 			if(actual_prob > num_max){
-				for(int j = 0; j < e.Length; j++){
-					this.objetivos[i].passData().estadoManager.AplicarEstado(e[j],dur,ptg);
-					if(!afectados.ContainsKey(objetivos[i].passData().Name))
-						afectados[objetivos[i].passData().Name] = new List<Estado>();
-					afectados[objetivos[i].passData().Name].Add(e[j]);
-					if(this.casterLevel >= 3){	
-						this.origen.passData().estadoManager.AplicarEstado(e[j],dur+1,ptg);
-						this.origen.passData().estadoManager.AplicarEstado(e[j],dur+1,ptg);
-					}
-					afectados[origen.passData().Name].Add(e[j]);
+				this.objetivos[i].passData().estadoManager.AplicarEstado(e,dur,ptg);
+				if(!afectados.ContainsKey(objetivos[i].passData().Name))
+					afectados[objetivos[i].passData().Name] = new List<Estado>();
+				afectados[objetivos[i].passData().Name].Add(e);
+				if(this.casterLevel >= 3){	
+					this.origen.passData().estadoManager.AplicarEstado(e,dur+1,ptg);
 				}
+				afectados[origen.passData().Name].Add(e);
+				
 			}
 		}
 		

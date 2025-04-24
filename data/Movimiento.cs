@@ -1,10 +1,10 @@
 using Godot;
 using System;
 using System.Linq;
-using System.Collections.Generic;  // This is the library that includes Dictionary
+using System.Collections.Generic; 
 
 
-public abstract partial class Movimiento{
+public abstract partial class Movimiento: Node2D{
 	
 	public enum Effect_Obj {Ally, Enemy, Both, Self}
 	public Effect_Obj effectObj { get; protected set; }
@@ -17,12 +17,7 @@ public abstract partial class Movimiento{
 	public int potencia = 0;
 	public int evolucion = 0;
 	
-	public bool hurtful = false;
-	public bool status = false;
-	
-	protected Estado[] prime_status;
-	
-	private Dictionary<string, List<Estado>> afectados = new Dictionary<string,  List<Estado>>();
+	protected Dictionary<string, List<Estado>> afectados = new Dictionary<string,  List<Estado>>();
 	
 	
 	public abstract void efecto();
@@ -78,7 +73,7 @@ public abstract partial class Movimiento{
 		}
 		return formula;
 	}
-	public virtual void putEffectsOnTargets(double proba, Estado[] e, int dur, int ptg){
+	public virtual void putEffectsOnTargets(double proba, Estado e, int dur, int ptg){
 		Random rand = new Random();
 		int num_max = 100, actual_prob, random_number;
 		double aux = proba;
@@ -90,12 +85,11 @@ public abstract partial class Movimiento{
 		for(int i = 0; i < objetivos.Count; i++){
 			random_number = rand.Next(1, num_max+1);
 			if(actual_prob + random_number > num_max){
-				for(int j = 0; j < e.Length; j++){
-					this.objetivos[i].passData().estadoManager.AplicarEstado(e[j],dur,ptg);
-					if(!afectados.ContainsKey(objetivos[i].passData().Name))
-						afectados[objetivos[i].passData().Name] = new List<Estado>();
-					afectados[objetivos[i].passData().Name].Add(e[j]);
-				}
+				this.objetivos[i].passData().estadoManager.AplicarEstado(e,dur,ptg);
+				this.objetivos[i].ActualizarIconosEstado();
+				if(!afectados.ContainsKey(objetivos[i].passData().Name))
+					afectados[objetivos[i].passData().Name] = new List<Estado>();
+				afectados[objetivos[i].passData().Name].Add(e);
 			}
 		}
 	}

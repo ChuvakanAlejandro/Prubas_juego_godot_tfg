@@ -8,22 +8,18 @@ public partial class CassandraMovimiento3 : Movimiento{
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
 		this.evolucion = 6;
-		this.hurtful = true;
-		this.status = true;
-		this.prime_status  = new Estado[] {Estado.Sellado};
 		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
+		int curacion;
 		this.origen.passData().removeMP(coste);
-		//this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.Sellado,1,0);
-		//this.objetivos[0].ActualizarIconosEstado();
-		//this.putEffectsOnTargets(100, prime_status, 2, 25);
+		this.putEffectsOnTargets(100, Estado.Sellado, 2, 25);
 		GD.Print("Cassandra va ha hacer su ataque especial!");
-		//curacion = (int) (this.hurtTargets(potencia) / 2);
+		curacion = (int) (this.hurtTargets(potencia) / 2);
 		if(this.casterLevel <= this.evolucion){
-			//this.origen.passData().restoreHP(curacion);
+			this.origen.passData().restoreHP(curacion);
 		}
 	}
 	
@@ -55,10 +51,10 @@ public partial class CassandraMovimiento3 : Movimiento{
 		this.casterLevel = l;
 		if(this.casterLevel >= this.evolucion){
 			coste = 6;
-			potencia = 5 + (int) (1.5 * this.casterLevel);
+			potencia = 1 + this.casterLevel;
 		}else{
 			coste = 4;
-			potencia = 5 + this.casterLevel;
+			potencia = 5;
 		}
 	}
 	

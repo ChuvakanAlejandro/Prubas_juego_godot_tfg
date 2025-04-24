@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Linq;
+using System.Collections.Generic; 
 
 public partial class ChuvakanMovimientoBasico : Movimiento{
 	
@@ -8,40 +10,33 @@ public partial class ChuvakanMovimientoBasico : Movimiento{
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
 		this.evolucion = 7;
-		this.hurtful = true;
-		this.status = false;
 		assingLevel(l);
 	}
 	
 	public override void efecto(){
 		//Logica del movimiento;
-		//this.hurtTargets(potencia);
-		/*if(this.casterLevel >= 8){
-			Random rand = new Random();
-			random_number = rand.Next(0, 1001);
-			if(random_number == 0){
-				this.origen.passData().estadoManager.AplicarEstado(Estado.Aturdido,2,0);
-			}else if(random_number >= 250 && random_number <= 500){
-				this.origen.passData().restoreMP((int) this.origen.passData().giveMAXMP()/2);
-			}
-		}
-		*/
 		GD.Print("Chuvakan va ha hacer su ataque basico!");
-		//this.hurtTargets(potencia);
+		this.hurtTargets(potencia);
+		if(this.casterLevel >= this.evolucion)
+			putEffectsOnTargets(0,Estado.Creacion,1,0);
 	}
-	public override void putEffectsOnTargets(double proba, Estado[] e, int dur, int ptg){
+	public override void putEffectsOnTargets(double proba, Estado e, int dur, int ptg){
 		Random rand = new Random();
-		int num_max = 1000, actual_prob, random_number;
+		int num_max = 1000, random_number;
 		for(int i = 0; i < objetivos.Count; i++){
 			random_number = rand.Next(0, num_max+1);
 			if(random_number == 0){
-					this.origen.passData().estadoManager.AplicarEstado(Estado.Aturdido,2,0);
-					if(!afectados.ContainsKey(objetivos[i].passData().Name))
-						afectados[objetivos[i].passData().Name] = new List<Estado>();
-					afectados[objetivos[i].passData().Name].Add(e[j]);
-				}
+				this.origen.passData().estadoManager.AplicarEstado(Estado.Aturdido,2,0);
+				if(!afectados.ContainsKey(objetivos[i].passData().Name))
+					afectados[objetivos[i].passData().Name] = new List<Estado>();
+				afectados[objetivos[i].passData().Name].Add(Estado.Aturdido);
 			}else if(random_number >= 250 && random_number <= 400){
 				this.origen.passData().restoreMP((int) this.origen.passData().giveMAXMP()/2);
+			}else if(random_number >= 550 && random_number <= 750){
+				this.origen.passData().estadoManager.AplicarEstado(Estado.Regeneracion,2,0);
+				if(!afectados.ContainsKey(objetivos[i].passData().Name))
+					afectados[objetivos[i].passData().Name] = new List<Estado>();
+				afectados[objetivos[i].passData().Name].Add(Estado.Regeneracion);
 			}
 		}
 	}
@@ -70,9 +65,9 @@ public partial class ChuvakanMovimientoBasico : Movimiento{
 		this.casterLevel = l;
 		coste = 0;
 		if(this.casterLevel >= this.evolucion){
-			potencia = 9 + this.casterLevel;
+			potencia = 7;
 		}else{
-			potencia = 8 + this.casterLevel;
+			potencia = 7;
 		}
 		
 	}

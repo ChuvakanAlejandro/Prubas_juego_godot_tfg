@@ -8,7 +8,6 @@ public partial class ChuvakanMovimientoDefensivo : Movimiento{
 		this.effectObj = Effect_Obj.Self;
 		this.num_objetivos = 1;
 		this.evolucion = 5;
-		this.status = true;
 		assingLevel(l);
 	}
 	
@@ -23,9 +22,7 @@ public partial class ChuvakanMovimientoDefensivo : Movimiento{
 			def_ptg = 25;
 		}
 		this.origen.passData().restoreMP(recuperacion_MP);
-		//this.origen.passData().estadoManager.AplicarEstado(Estado.BuffDEF,2,def_ptg);
-		//this.origen.ActualizarIconosEstado();
-		//this.putEffectsOnTargets(100, prime_status, 2, 25);
+		this.putEffectsOnTargets(100, Estado.BuffDEF, 2, def_ptg);
 		GD.Print("Alex va ha defenderse este turno!");
 	}
 	

@@ -8,8 +8,6 @@ public partial class IshimondoMovimiento1 : Movimiento{
 		this.effectObj = Effect_Obj.Enemy;
 		this.num_objetivos = 1;
 		this.evolucion = 5;
-		this.hurtful = true;
-		this.status = false;
 		assingLevel(l);
 	}
 	
@@ -88,7 +86,7 @@ public partial class IshimondoMovimiento1 : Movimiento{
 	}
 	public override void assingLevel(int l){
 		this.casterLevel = l;
-		this.potencia 4;
+		this.potencia = 2;
 		if(this.casterLevel >= this.evolucion){
 			coste = 7;
 		}else{

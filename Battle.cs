@@ -77,16 +77,27 @@ public partial class Battle : Node2D
 	
 	public void prepareDialog(Fighter actor, Movimiento mov_actual){
 		movimientoUsado = mov_actual;
-		string dialogo = actor.passData().Name  + " ha usado " + movimientoUsado.giveTitulo() + " en " ; 
-		dialogo  = $"{dialogo}{movimientoUsado.objetivos[0].passData().Name}";
-		if( movimientoUsado.objetivos.Count > 1){
-			int i = 1;
-			while(i <  movimientoUsado.objetivos.Count){
-				dialogo = $"{dialogo}, {movimientoUsado.objetivos[i].passData().Name}";
-				i++;
+		string dialogo = actor.passData().Name  + " ha usado " + movimientoUsado.giveTitulo(); 
+		dialogo  = $"{dialogo} en ";
+		if(movimientoUsado.whoAffects() != 3){
+			if(movimientoUsado.affectsAllTeam()){
+				if(movimientoUsado.whoAffects() == 0)
+					dialogo  = $"{dialogo}su equipo";
+				else if(movimientoUsado.whoAffects() == 1)
+					dialogo  = $"{dialogo}el equipo enemigo";
+			}else{
+				dialogo  = $"{dialogo}{movimientoUsado.objetivos[0].passData().Name}";
+				if(movimientoUsado.objetivos.Count > 1 ){
+					int i = 1;
+					while(i <  movimientoUsado.objetivos.Count-1){
+						dialogo = $"{dialogo}, {movimientoUsado.objetivos[i].passData().Name}";
+						i++;
+					}
+					dialogo += $"{dialogo} y {movimientoUsado.objetivos[i].passData().Name}";
+				}
 			}
-			dialogo += $"{dialogo} y {movimientoUsado.objetivos[i].passData().Name}";
 		}
+		dialogo  = $"{dialogo}.";
 		GD.Print("Dialogo preparado.");
 		dialog.ShowDialog(dialogo);
 		//customSignals.EmitSignal(nameof(CustomSignals.OnDialogRequested), dialogo);

@@ -12,6 +12,9 @@ public partial class Battle : Node2D
 	private FighterTeam allies;
 	private MenuBatalla menu_de_pelea;
 	private CuadroTexto dialog;
+	private AudioStreamPlayer2D soundplayer;
+	
+	int fase = 0;
 	
 	//Managers
 	private TurnManager turnManager;
@@ -25,10 +28,12 @@ public partial class Battle : Node2D
 	
 	public override void _Ready(){
 		customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		customSignals.OnDialogConfirmed += continueBattle;
 		enfrentamiento = GetNode<Enfrentamiento>("EnfrentamientoAletorio");
 		allies = GetNode<FighterTeam>("Equipo_Aliado");
 		menu_de_pelea = GetNode<MenuBatalla>("Menu_Batalla");
 		dialog = GetNode<CuadroTexto>("Dialogo");
+		soundplayer = GetNode<AudioStreamPlayer2D>("SoundPlayer2D");
 		allylist = allies.giveList();
 		if(allylist == null){
 			GD.PrintErr("allyList no tiene lista.");
@@ -101,5 +106,11 @@ public partial class Battle : Node2D
 		GD.Print("Dialogo preparado.");
 		dialog.ShowDialog(dialogo);
 		//customSignals.EmitSignal(nameof(CustomSignals.OnDialogRequested), dialogo);
+	}
+	
+	public void continueBattle(){
+		GD.Print("I am here :D.");
+		soundplayer.Play();
+		
 	}
 }

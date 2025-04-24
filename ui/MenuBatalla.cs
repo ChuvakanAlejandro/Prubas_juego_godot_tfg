@@ -428,10 +428,10 @@ public partial class MenuBatalla : Control
 				f.DetenerParpadeo();
 				GD.Print($"¡Enemigo {f.Name} seleccionado!");
 			}
-			battle_access.prepareDialog(actor, mov_actual);
 			selectingTarget = false;
 			flecha.ShowArrow(false);
 			ChangeMenu(-1);
+			battle_access.prepareDialog(actor, mov_actual);
 			/*
 			mov_actual.efecto();
 			mov_actual.erraseTarget();

@@ -4,5 +4,5 @@ using System;
 public partial class CustomSignals : Node
 {
 	[Signal]
-	public delegate void OnDialogRequestedEventHandler(string text);
+	public delegate void OnDialogConfirmedEventHandler();
 }

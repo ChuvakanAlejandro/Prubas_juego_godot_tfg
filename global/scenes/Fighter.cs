@@ -7,6 +7,9 @@ public partial class Fighter : Node2D
 	private Entity data;
 	private AnimatedSprite2D animSprite;
 	private Tween parpadeoTween;
+	private PackedScene DamagePopupScene = GD.Load<PackedScene>("res://ui/damage_popUp.tscn");
+	
+	private CustomSignals customSignals;
 
 	private void prepareData(int level){
 		string name = this.Name.ToString();
@@ -33,6 +36,7 @@ public partial class Fighter : Node2D
 	
 	public override void _Ready(){
 		animSprite = GetNode<AnimatedSprite2D>("Sprites");
+		customSignals = GetNode<CustomSignals>("/root/CustomSignals");
 		this.prepareFighter(1);
 		//this.passData().estadoManager.AplicarEstado(Estado.Evasion,1,0);
 		//this.passData().estadoManager.AplicarEstado(Estado.BuffDEF,1,0);
@@ -74,6 +78,7 @@ public partial class Fighter : Node2D
 			
 		}
 		GetNode<EstadoDisplay>("Estado_Display").SetIconos(iconos);
+		ShowEffectPopup("Estados");
 	}
 	
 	public void Parpadear(){
@@ -104,6 +109,35 @@ public partial class Fighter : Node2D
 			animSprite.Modulate = new Color(1f, 1f, 1f);
 		}
 	}
+	
+	public void ReceiveDamage(int damage){
+		// Aplica el daño
+		data.removeHP(damage);
+		// Mostrar el número de daño
+		ShowDamagePopup(damage);
+	}
+
+	private void ShowDamagePopup(int damage)
+	{
+		var popup = (DamagePopup)DamagePopupScene.Instantiate();
+		GetTree().CurrentScene.AddChild(popup);
+
+		// Posicionarlo encima del personaje
+		Vector2 globalPosition = GetGlobalPosition();
+		popup.GlobalPosition = globalPosition + new Vector2(0, -50); // un poco arriba del personaje
+		popup.SetDamage(damage);
+	}
+	private void ShowEffectPopup(string text)
+	{
+		var popup = (DamagePopup)DamagePopupScene.Instantiate();
+		GetTree().CurrentScene.AddChild(popup);
+
+		// Posicionarlo encima del personaje
+		Vector2 globalPosition = GetGlobalPosition();
+		popup.GlobalPosition = globalPosition + new Vector2(0, -50); // un poco arriba del personaje
+		popup.SetDamage(text);
+	}
+	
 	
 	
 }

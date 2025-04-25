@@ -15,10 +15,10 @@ public partial class IshimondoMovimiento2 : Movimiento{
 		//Logica del movimiento;
 		this.origen.passData().removeMP(coste);
 		if(this.casterLevel < this.evolucion){
-			//this.putEffectsOnTargets(100, Estado.DeBuffDEF, 3, 20);
+			this.putEffectsOnTargets(100, Estado.DeBuffDEF, 3, 20);
 		}else{
-			//this.putEffectsOnTargets(100, Estado.DeBuffDEF, 3, 10);
-			//this.putEffectsOnTargets(100, Estado.Marca_del_cazador, 3, 0);
+			this.putEffectsOnTargets(100, Estado.DeBuffDEF, 3, 20);
+			this.putEffectsOnTargets(100, Estado.Marca_del_cazador, 3, 0);
 		}
 		
 		GD.Print("Ishimondo usa Rugido de batalla!");

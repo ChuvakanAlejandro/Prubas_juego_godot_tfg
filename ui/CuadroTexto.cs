@@ -52,6 +52,7 @@ public partial class CuadroTexto : Control
 	}
 	public void OnButtonPressed(){
 		GD.Print("Boton dado.");
+		panel.Visible = false;
 		customSignals.EmitSignal(nameof(CustomSignals.OnDialogConfirmed));
 		
 	}
@@ -64,5 +65,7 @@ public partial class CuadroTexto : Control
 		isWriting = true;
 		label.Text = "";
 		panel.Visible = true;
+		boton.Visible = false;
+		finishedTyping = false;
 	}
 }

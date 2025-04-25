@@ -38,7 +38,7 @@ public partial class VylsMovimientoBasico : Movimiento{
 				f2 = DEFOrigen + defensaBufado;
 			}
 			formula = Math.Max(1,p+f1-f2);
-			objetivos[i].passData().removeHP(formula);
+			objetivos[i].ReceiveDamage(formula);
 		}
 		return formula;
 	}

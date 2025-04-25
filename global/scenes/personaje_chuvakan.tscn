@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cfbr1rate5nxv"]
+[gd_scene load_steps=11 format=3 uid="uid://cfbr1rate5nxv"]
 
 [ext_resource type="Texture2D" uid="uid://bx7o6oyiyg8s4" path="res://assets/sprites/Friends/chuvakan.png" id="1_0va0p"]
 [ext_resource type="Script" path="res://global/scenes/Fighter.cs" id="1_82qgx"]
-[ext_resource type="PackedScene" uid="uid://dca551kyld357" path="res://global/scenes/estado_display.tscn" id="3_d5ykc"]
+[ext_resource type="PackedScene" uid="uid://l7h4ub3ejtq7" path="res://ui/damage_popUp.tscn" id="2_a535i"]
+[ext_resource type="PackedScene" path="res://global/scenes/estado_display.tscn" id="3_d5ykc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_exeqa"]
 atlas = ExtResource("1_0va0p")
@@ -69,6 +70,7 @@ animations = [{
 
 [node name="Chuvakan" type="Node2D"]
 script = ExtResource("1_82qgx")
+DamagePopupScene = ExtResource("2_a535i")
 
 [node name="Sprites" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)

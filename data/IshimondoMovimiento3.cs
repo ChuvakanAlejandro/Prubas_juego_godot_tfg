@@ -15,12 +15,12 @@ public partial class IshimondoMovimiento3 : Movimiento{
 		//Logica del movimiento
 		this.origen.passData().removeMP(coste);
 		if(this.casterLevel >= 8){
-			//this.putEffectsOnTargets(100, Estado.BuffDMG, 3, 50);
-			//this.putEffectsOnTargets(100, Estado.Sellado, 3, 0);
-			//this.putEffectsOnTargets(100, Estado.Bloqueo, 3, 0);
+			this.putEffectsOnTargets(100, Estado.BuffDMG, 3, 50);
+			this.putEffectsOnTargets(100, Estado.Sellado, 3, 0);
+			this.putEffectsOnTargets(100, Estado.Bloqueo, 3, 0);
 		}else{
-			//this.putEffectsOnTargets(100, Estado.DeBuffDEF, 3, 15);
-			//this.putEffectsOnTargets(100, Estado.BuffDMG, 3, 30);
+			this.putEffectsOnTargets(100, Estado.DeBuffDEF, 3, 15);
+			this.putEffectsOnTargets(100, Estado.BuffDMG, 3, 30);
 		}
 		GD.Print("Ishimondo usa Despertar del instinto!");
 	}

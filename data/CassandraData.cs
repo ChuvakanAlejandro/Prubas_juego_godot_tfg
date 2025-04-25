@@ -22,6 +22,8 @@ public partial class CassandraData : Entity
 		Health = TrueHealth[level-1];
 		Mana = TrueMana[level-1];
 		
+		this.estadoManager = new EstadoManager(this);
+		
 		mov1 = new CassandraMovimiento1(Level);
 		mov2 = new CassandraMovimiento2(Level);
 		mov3 = new CassandraMovimiento3(Level);

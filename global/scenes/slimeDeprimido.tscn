@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://ob0a30qycgnc"]
+[gd_scene load_steps=11 format=3 uid="uid://ob0a30qycgnc"]
 
 [ext_resource type="Script" path="res://global/scenes/Fighter.cs" id="1_7u7yh"]
+[ext_resource type="PackedScene" uid="uid://l7h4ub3ejtq7" path="res://ui/damage_popUp.tscn" id="2_6vh7n"]
 [ext_resource type="Texture2D" uid="uid://ne2lj702fsno" path="res://assets/sprites/Enemies/sadone.png" id="2_df05r"]
-[ext_resource type="PackedScene" uid="uid://dca551kyld357" path="res://global/scenes/estado_display.tscn" id="3_cp7hd"]
+[ext_resource type="PackedScene" path="res://global/scenes/estado_display.tscn" id="3_cp7hd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sqpgj"]
 atlas = ExtResource("2_df05r")
@@ -69,6 +70,7 @@ animations = [{
 
 [node name="Grey_Slime" type="Node2D"]
 script = ExtResource("1_7u7yh")
+DamagePopupScene = ExtResource("2_6vh7n")
 
 [node name="Sprites" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, 1)

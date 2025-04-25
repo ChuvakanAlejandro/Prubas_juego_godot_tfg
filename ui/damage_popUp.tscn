@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://l7h4ub3ejtq7"]
 
-[ext_resource type="Script" path="res://DamageNumber.cs" id="1_wy5u7"]
+[ext_resource type="Script" path="res://DamagePopup.cs" id="1_wy5u7"]
 
 [node name="Control" type="Control"]
 layout_mode = 3

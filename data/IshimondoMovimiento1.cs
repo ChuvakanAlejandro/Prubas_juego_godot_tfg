@@ -38,7 +38,7 @@ public partial class IshimondoMovimiento1 : Movimiento{
 				potencia_total += potencia;
 			count++;
 		}
-		//this.hurtTargets(potencia);
+		this.hurtTargets(potencia);
 		GD.Print("Ishimondo usa Golpes voraces!");
 	}
 	public override int hurtTargets(int p){
@@ -59,7 +59,7 @@ public partial class IshimondoMovimiento1 : Movimiento{
 			if(objetivos[i].passData().estadoManager.TieneEstado(Estado.Marca_del_cazador)){
 				vida_robada += (int) (Math.Max(1,formula/2));
 			}
-			objetivos[i].passData().removeHP(formula);
+			objetivos[i].ReceiveDamage(formula);
 		}
 		origen.passData().restoreHP(vida_robada);
 		return formula;

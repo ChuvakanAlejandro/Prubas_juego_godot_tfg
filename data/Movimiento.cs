@@ -17,12 +17,11 @@ public abstract partial class Movimiento: Node2D{
 	public int potencia = 0;
 	public int evolucion = 0;
 	
-	protected Dictionary<string, List<Estado>> afectados = new Dictionary<string,  List<Estado>>();
-	
+	public Dictionary<string, List<Estado>> afectados = new Dictionary<string,  List<Estado>>();
 	
 	public abstract void efecto();
 	
-	public void assingCaster(Fighter caster){
+	public void assignCaster(Fighter caster){
 		this.origen = caster;
 	}
 	public bool enoughMana(){
@@ -36,6 +35,9 @@ public abstract partial class Movimiento: Node2D{
 			objetivos.RemoveAt(objetivos.Count - 1);
 		}
 		afectados.Clear();
+	}
+	public void removeAffected(string key){
+		afectados.Remove(key);
 	}
 	public int whoAffects(){
 		switch(effectObj){
@@ -51,7 +53,7 @@ public abstract partial class Movimiento: Node2D{
 		return -1;
 	}
 	public bool someAffected(){
-		return afectados.Count == 0;
+		return afectados.Count != 0;
 	}
 	
 	public virtual int hurtTargets(int p){
@@ -69,7 +71,7 @@ public abstract partial class Movimiento: Node2D{
 			defensaBufado = (int) (DEFOrigen * porcentajeDEF);
 			f2 = DEFOrigen + defensaBufado;
 			formula = Math.Max(1,p+f1-f2);
-			objetivos[i].passData().removeHP(formula);
+			objetivos[i].ReceiveDamage(formula);
 		}
 		return formula;
 	}

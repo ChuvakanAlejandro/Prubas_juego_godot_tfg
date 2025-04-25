@@ -38,7 +38,7 @@ public partial class IshimondoMovimientoBasico : Movimiento{
 			if(objetivos[i].passData().estadoManager.TieneEstado(Estado.Marca_del_cazador)){
 				vida_robada += (int) (Math.Max(1,formula/2));
 			}
-			objetivos[i].passData().removeHP(formula);
+			objetivos[i].ReceiveDamage(formula);
 		}
 		origen.passData().restoreHP(vida_robada);
 		return formula;

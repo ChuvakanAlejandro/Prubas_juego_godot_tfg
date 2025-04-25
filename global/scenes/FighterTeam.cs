@@ -18,7 +18,7 @@ public partial class FighterTeam : Node2D
 	public void prepare_TeamList(){
 	Random rand = new Random(); 
 	foreach (Fighter e in GetChildren()){
-		int level = e.passData().ControlPlayer==true ? 1 : rand.Next(1, 4);
+		int level = e.passData().ControlPlayer==true ? 3 : rand.Next(1, 4);
 		e.prepareFighter(level);
 		string nodeName = e.Name;
 		nodeName = nodeName.Replace('_', ' '); 

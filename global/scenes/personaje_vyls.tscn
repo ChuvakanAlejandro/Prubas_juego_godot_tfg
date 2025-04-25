@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://xvi4ea1fmar3"]
+[gd_scene load_steps=11 format=3 uid="uid://dv7uss4ub0a6h"]
 
 [ext_resource type="Script" path="res://global/scenes/Fighter.cs" id="1_iqwuf"]
 [ext_resource type="Texture2D" uid="uid://ch4fmsqcjv6t2" path="res://assets/sprites/Friends/halo.png" id="2_ierpk"]
-[ext_resource type="PackedScene" uid="uid://dca551kyld357" path="res://global/scenes/estado_display.tscn" id="3_8bfg7"]
+[ext_resource type="PackedScene" uid="uid://l7h4ub3ejtq7" path="res://ui/damage_popUp.tscn" id="2_jjwdo"]
+[ext_resource type="PackedScene" path="res://global/scenes/estado_display.tscn" id="3_8bfg7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lrfma"]
 atlas = ExtResource("2_ierpk")
@@ -69,6 +70,7 @@ animations = [{
 
 [node name="Vyls" type="Node2D"]
 script = ExtResource("1_iqwuf")
+DamagePopupScene = ExtResource("2_jjwdo")
 
 [node name="Sprites" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)

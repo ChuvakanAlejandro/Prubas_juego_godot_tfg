@@ -14,7 +14,8 @@ public partial class IshimondoMovimiento4 : Movimiento{
 	public override void efecto(){
 		//Logica del movimiento;
 		this.origen.passData().removeMP(coste);
-		//this.hurtTargets(potencia);
+		this.hurtTargets(potencia);
+		this.putEffectsOnTargets(100,Estado.Sangrado,1,0);
 		//this.objetivos[0].passData().estadoManager.AplicarEstado(Estado.Sangrado,1,0);
 		//this.objetivos[0].ActualizarIconosEstado();
 		GD.Print("Ishimondo usa Carantoña!");
@@ -37,7 +38,7 @@ public partial class IshimondoMovimiento4 : Movimiento{
 			if(objetivos[i].passData().estadoManager.TieneEstado(Estado.Marca_del_cazador)){
 				vida_robada += (int) (Math.Max(1,formula/2));
 			}
-			objetivos[i].passData().removeHP(formula);
+			objetivos[i].ReceiveDamage(formula);
 		}
 		origen.passData().restoreHP(vida_robada);
 		return formula;
@@ -53,7 +54,7 @@ public partial class IshimondoMovimiento4 : Movimiento{
 		if(this.casterLevel < this.evolucion){
 			return "Ishimondo usa sus garras con fiereza lo que le deja sangrando.";
 		}else{
-			return "Ishimondo usa sus garras con toda sus fuerzas lo que le deja sangrando.";
+			return "Ishimondo usa sus garras con toda sus ganas lo que le deja sangrando.";
 		}
 	}
 	public override bool affectsAllTeam(){

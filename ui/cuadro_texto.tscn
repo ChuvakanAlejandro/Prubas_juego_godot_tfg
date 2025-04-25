@@ -57,6 +57,5 @@ text = ">"
 
 [node name="TypeSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_benul")
-volume_db = 1.675
 
 [connection signal="pressed" from="Panel/MarginContainer/Label/Button" to="." method="OnButtonPressed"]

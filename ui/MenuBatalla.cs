@@ -81,17 +81,43 @@ public partial class MenuBatalla : Control
 	
 	public void prepareTitles(Fighter f){
 		Entity dataf = f.passData();
+		dataf.mov1.assignCaster(f);
+		dataf.mov2.assignCaster(f);
+		dataf.mov3.assignCaster(f);
+		dataf.mov4.assignCaster(f);
+		dataf.atqBasico.assignCaster(f);
+		dataf.defBasico.assignCaster(f);
 		attack.Text = dataf.atqBasico.giveTitulo();
-		mov1.Text = dataf.mov1.giveTitulo();
-		mov2.Text = dataf.mov2.giveTitulo();
+		if(dataf.mov1.enoughMana())
+			mov1.Text = dataf.mov1.giveTitulo();
+		else{
+			mov1.Text = "Insuficiente maná";
+			mov1.Disabled = true;
+		}
+		if(dataf.mov2.enoughMana())
+			mov2.Text = dataf.mov2.giveTitulo();
+		else{
+			mov2.Text = "Insuficiente maná";
+			mov2.Disabled = true;
+		}
 		if(dataf.mov3.moveIsAvailable()){
-			mov3.Text = dataf.mov3.giveTitulo();
+			if(dataf.mov3.enoughMana())
+				mov3.Text = dataf.mov3.giveTitulo();
+			else{
+				mov3.Text = "Insuficiente maná";
+				mov3.Disabled = true;
+			}
 		}else{
 			mov3.Text = "NIVEL 2";
 			mov3.Disabled = true;
 		}
 		if(dataf.mov4.moveIsAvailable()){
-			mov4.Text = dataf.mov4.giveTitulo();
+			if(dataf.mov4.enoughMana())
+				mov4.Text = dataf.mov4.giveTitulo();
+			else{
+				mov4.Text = "Insuficiente maná";
+				mov4.Disabled = true;
+			}
 		}else{
 			mov4.Text = "NIVEL 3";
 			mov4.Disabled = true;
@@ -257,7 +283,6 @@ public partial class MenuBatalla : Control
 				mov_actual = actor.passData().defBasico;
 				break;
 		}
-		mov_actual.assingCaster(actor);
 		if(!mov_actual.enoughMana())
 			return false;
 		target_disposition = mov_actual.whoAffects();
@@ -393,8 +418,17 @@ public partial class MenuBatalla : Control
 	private void ConfirmTarget()
 	{
 		Fighter confirmedTarget;
-		if(currentTargetIndex >= this.enemieslist.Count && target_disposition == 2){
-			confirmedTarget = this.allylist[currentTargetIndex-this.enemieslist.Count];
+		GD.Print($"{currentTargetIndex}");
+		if(target_disposition == 2){
+			if(currentTargetIndex >= this.enemieslist.Count){
+				GD.Print($"{currentTargetIndex} >= {this.allylist.Count}");
+				confirmedTarget = this.allylist[currentTargetIndex-this.enemieslist.Count];
+			}
+			else{
+				GD.Print($"{currentTargetIndex} < {this.allylist.Count}");
+				confirmedTarget = this.enemieslist[currentTargetIndex];
+			}
+			mov_actual.addTarget(confirmedTarget);
 		}else{
 			if(target_disposition == 1){
 				if(mov_actual.affectsAllTeam()){

@@ -4,8 +4,6 @@ using System.Linq;
 using System.Collections.Generic; 
 
 public partial class ChuvakanMovimiento1 : Movimiento{
-	
-	
 	public ChuvakanMovimiento1(int l) {
 		this.effectObj = Effect_Obj.Ally;
 		this.num_objetivos = 1;

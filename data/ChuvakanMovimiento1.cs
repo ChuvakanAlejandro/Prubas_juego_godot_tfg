@@ -31,15 +31,17 @@ public partial class ChuvakanMovimiento1 : Movimiento{
 		actual_prob = (int) aux;
 		for(int i = 0; i < objetivos.Count; i++){
 			random_number = rand.Next(1, num_max+1);
-			if(actual_prob > num_max){
+			if(actual_prob + random_number > num_max){
 				this.objetivos[i].passData().estadoManager.AplicarEstado(e,dur,ptg);
+				this.objetivos[i].ActualizarIconosEstado();
 				if(!afectados.ContainsKey(objetivos[i].passData().Name))
 					afectados[objetivos[i].passData().Name] = new List<Estado>();
 				afectados[objetivos[i].passData().Name].Add(e);
-				if(this.casterLevel >= 3){	
+				if(this.casterLevel >= this.evolucion){	
 					this.origen.passData().estadoManager.AplicarEstado(e,dur+1,ptg);
+					this.origen.ActualizarIconosEstado();
+					afectados[origen.passData().Name].Add(e);
 				}
-				afectados[origen.passData().Name].Add(e);
 				
 			}
 		}

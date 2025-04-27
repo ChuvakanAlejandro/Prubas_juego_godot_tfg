@@ -20,7 +20,7 @@ public partial class CuadroTexto : Control
 	public override void _Ready()
 	{
 		customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		//customSignals.OnDialogRequested += ShowDialog;
+		customSignals.OnDialogRequested += ShowDialog;
 		typeSound = GetNode<AudioStreamPlayer2D>("TypeSound");
 		panel = GetNode<Panel>("Panel");
 		label = GetNode<Label>("Panel/MarginContainer/Label");

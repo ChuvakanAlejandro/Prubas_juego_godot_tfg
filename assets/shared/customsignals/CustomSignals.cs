@@ -7,5 +7,7 @@ public partial class CustomSignals : Node
 	public delegate void OnDialogConfirmedEventHandler();
 	[Signal]
 	public delegate void OnMoveResolvedEventHandler();
+	[Signal]
+	public delegate void OnDialogRequestedEventHandler(string text);
 	
 }

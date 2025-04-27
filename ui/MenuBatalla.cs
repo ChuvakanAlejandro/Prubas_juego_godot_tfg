@@ -88,21 +88,27 @@ public partial class MenuBatalla : Control
 		dataf.atqBasico.assignCaster(f);
 		dataf.defBasico.assignCaster(f);
 		attack.Text = dataf.atqBasico.giveTitulo();
-		if(dataf.mov1.enoughMana())
+		if(dataf.mov1.enoughMana()){
 			mov1.Text = dataf.mov1.giveTitulo();
+			mov1.Disabled = false;
+		}
 		else{
 			mov1.Text = "Insuficiente maná";
 			mov1.Disabled = true;
 		}
-		if(dataf.mov2.enoughMana())
+		if(dataf.mov2.enoughMana()){
 			mov2.Text = dataf.mov2.giveTitulo();
+			mov2.Disabled = false;
+		}
 		else{
 			mov2.Text = "Insuficiente maná";
 			mov2.Disabled = true;
 		}
 		if(dataf.mov3.moveIsAvailable()){
-			if(dataf.mov3.enoughMana())
+			if(dataf.mov3.enoughMana()){
 				mov3.Text = dataf.mov3.giveTitulo();
+				mov3.Disabled = false;
+			}
 			else{
 				mov3.Text = "Insuficiente maná";
 				mov3.Disabled = true;
@@ -112,8 +118,10 @@ public partial class MenuBatalla : Control
 			mov3.Disabled = true;
 		}
 		if(dataf.mov4.moveIsAvailable()){
-			if(dataf.mov4.enoughMana())
+			if(dataf.mov4.enoughMana()){
 				mov4.Text = dataf.mov4.giveTitulo();
+				mov4.Disabled = false;
+			}
 			else{
 				mov4.Text = "Insuficiente maná";
 				mov4.Disabled = true;
@@ -125,8 +133,8 @@ public partial class MenuBatalla : Control
 		if(dataf.defBasico.moveIsAvailable()){
 			guard.Text = dataf.defBasico.giveTitulo();
 		}else{
-			mov4.Text = "BLOQUEADO";
-			mov4.Disabled = true;
+			guard.Text = "BLOQUEADO";
+			guard.Disabled = true;
 		}
 		actor = f;
 	}

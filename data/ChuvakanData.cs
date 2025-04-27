@@ -17,7 +17,7 @@ public partial class ChuvakanData : Entity
 		TrueAttack = new int[] {5,6,7,8,9,10,11,12,13,14};
 		TrueDefense = new int[] {5,6,7,8,9,10,11,12,13,14};
 		TrueMana = new int[] {15,17,19,21,23,25,27,29,31,33};
-		TrueSpeed = new int[] {5,7,99,11,13,15,17,19,21,23};
+		TrueSpeed = new int[] {5,7,9,11,13,15,17,19,21,23};
 		
 		Health = TrueHealth[level-1];
 		Mana = TrueMana[level-1];

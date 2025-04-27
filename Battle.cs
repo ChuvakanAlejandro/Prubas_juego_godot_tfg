@@ -27,7 +27,8 @@ public partial class Battle : Node2D
 		
 	public override void _Ready(){
 		customSignals = GetNode<CustomSignals>("/root/CustomSignals");
-		customSignals.OnDialogConfirmed += continueBattle;
+		customSignals.OnDialogPass += continueBattle;
+		customSignals.OnBattleMove += MoveConfirmed;  
 		enfrentamiento = GetNode<Enfrentamiento>("EnfrentamientoAletorio");
 		allies = GetNode<FighterTeam>("Equipo_Aliado");
 		menu_de_pelea = GetNode<MenuBatalla>("Menu_Batalla");
@@ -58,13 +59,19 @@ public partial class Battle : Node2D
 			GD.Print("LEVEL: " + c.Level);
 			GD.Print("*****************************");
 		}
-		
 		turnManager = new TurnManager(allylist, enemieslist);
-		menu_de_pelea.receiveLists(enemieslist, allylist, this);
-		this.analizeBattle();
+		menu_de_pelea.receiveLists(enemieslist, allylist);
+		Fighter fig = turnManager.inAction();
+		fig.passData().isMyTurn();
+		while(fig.passData().ControlPlayer == false){
+			turnManager.passTurnToNextFighter();
+			fig = turnManager.inAction();
+		}
+		menu_de_pelea.makeMenuVisible(fig);
 	}
 	
 	public void analizeBattle(){
+		turnManager.passTurnToNextFighter();
 		Fighter fig = turnManager.inAction();
 		fig.passData().isMyTurn();
 		while(fig.passData().ControlPlayer == false){
@@ -79,111 +86,21 @@ public partial class Battle : Node2D
 	{
 	}
 	
-	public void prepareDialog(Fighter actor, Movimiento mov_actual){
+	public void MoveConfirmed(Fighter actor, Movimiento mov_actual){
 		movimientoUsado = mov_actual;
-		string dialogo = actor.passData().Name  + " ha usado " + movimientoUsado.giveTitulo(); 
-		if(movimientoUsado.whoAffects() != 3){
-			dialogo  = $"{dialogo} en ";
-			if(movimientoUsado.affectsAllTeam()){
-				if(movimientoUsado.whoAffects() == 0)
-					dialogo  = $"{dialogo}su equipo";
-				else if(movimientoUsado.whoAffects() == 1)
-					dialogo  = $"{dialogo}el equipo enemigo";
-			}else{
-				dialogo  = $"{dialogo}{movimientoUsado.objetivos[0].passData().Name}";
-				if(movimientoUsado.objetivos.Count > 1 ){
-					int i = 1;
-					while(i <  movimientoUsado.objetivos.Count-1){
-						dialogo = $"{dialogo}, {movimientoUsado.objetivos[i].passData().Name}";
-						i++;
-					}
-					dialogo = $"{dialogo} y {movimientoUsado.objetivos[i].passData().Name}";
-				}
-			}
-		}
-		dialogo = $"{dialogo}.";
-		GD.Print($"Dialogo preparado: {dialogo}");
-		dialog.ShowDialog(dialogo);
 	}
-	public void prepareDialogConsecuence(){
-		string dialogo = "";
-		string affected = "";
-		if(movimientoUsado.someAffected()){
-			var entry = movimientoUsado.afectados.First();
-			affected = entry.Key; 
-			dialogo  = $"{affected} ha sido afectado por";
-			List<Estado> estados = entry.Value;
-			int i = 0;
-			dialogo = $"{dialogo} {EstadosATexto(estados[i])}";
-			i++;
-			if(i <  estados.Count){
-				while(i <  estados.Count-1){
-					dialogo = $"{dialogo}, {EstadosATexto(estados[i])}";
-					i++;
-				}
-				dialogo = $"{dialogo} y {EstadosATexto(estados[i])}";
-			}
-		}
-		dialogo = $"{dialogo}.";
-		GD.Print($"Dialogo preparado: {dialogo}");
-		movimientoUsado.removeAffected(affected);
-		dialog.ShowDialog(dialogo);
-		//customSignals.EmitSignal(nameof(CustomSignals.OnDialogRequested), dialogo);
-	}
-	
 	
 	public async void continueBattle(){
 		movimientoUsado.efecto();
 		soundplayer.Play();
 		await ToSignal(customSignals, "OnMoveResolved");
-		customSignals.OnDialogConfirmed -= continueBattle;
+		customSignals.OnDialogPass -= continueBattle;
 		while(movimientoUsado.someAffected()){
-			prepareDialogConsecuence();
-			await ToSignal(customSignals, "OnDialogConfirmed");
+			customSignals.EmitSignal(nameof(CustomSignals.OnBattleEffectDialogRequested));
+			await ToSignal(customSignals, "OnDialogPass");
 		}
-		customSignals.OnDialogConfirmed += continueBattle;
+		customSignals.OnDialogPass += continueBattle;
 		movimientoUsado.erraseTarget();
 		analizeBattle();
-	}
-	
-	public string EstadosATexto(Estado e){
-		switch(e){
-			case Estado.BuffDMG:
-				return "un potenciador de daño";
-			case Estado.DeBuffDMG:
-				return "una reduccion del de daño";
-			case Estado.BuffDEF:
-				return "un potenciador de defensa";
-			case Estado.DeBuffDEF:
-				return "una reduccion del de defensa";
-			case Estado.BuffVEL:
-				return "un potenciador de velocidad";
-			case Estado.DeBuffVEL:
-				return "una reduccion del de velocidad";
-			case Estado.Aturdido:
-				return "aturdimiento";
-			case Estado.Sellado:
-				return "sello magico";
-			case Estado.Bloqueo:
-				return "bloqueo de defensas";
-			case Estado.Sangrado:
-				return "sangrado";
-			case Estado.Envenenado:
-				return "veneno";
-			case Estado.Regeneracion:
-				return "regeneracion pasiva de vida";
-			case Estado.Energetico:
-				return "regeneracion pasiva de maná";
-			case Estado.Evasion:
-				return "evasión";
-			case Estado.Marca_del_cazador:
-				return "la marca del cazador";
-			case Estado.Creacion:
-				return "el potenciador de Alex";
-			case Estado.Vanguardia:
-				return "la proteccion de Vyls";
-			default:
-				return "un estado no reconocido (espera, que?)";
-		}
 	}
 }

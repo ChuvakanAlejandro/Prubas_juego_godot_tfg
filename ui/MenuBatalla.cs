@@ -33,10 +33,12 @@ public partial class MenuBatalla : Control
 	Movimiento mov_actual;
 	private int target_disposition;
 	
-	private Battle battle_access;
+	private CustomSignals customSignals;
 	
 	public override void _Ready()
 	{
+		customSignals = GetNode<CustomSignals>("/root/CustomSignals");
+		
 		attack = GetNode<Button>("Battle_Action/MarginContainer/HBoxContainer/Attack");
 		special = GetNode<Button>("Battle_Action/MarginContainer/HBoxContainer/Special");
 		bag = GetNode<Button>("Battle_Action/MarginContainer/HBoxContainer/Bag");
@@ -310,10 +312,9 @@ public partial class MenuBatalla : Control
 		return true;
 	}
 	
-	public void receiveLists(List<Fighter> ene, List<Fighter> ally, Battle battle){
+	public void receiveLists(List<Fighter> ene, List<Fighter> ally){
 		this.allylist = ally;
 		this.enemieslist = ene;
-		this.battle_access = battle;
 	}
 	
 	private void StartTargetSelection(){
@@ -426,7 +427,6 @@ public partial class MenuBatalla : Control
 	private void ConfirmTarget()
 	{
 		Fighter confirmedTarget;
-		GD.Print($"{currentTargetIndex}");
 		if(target_disposition == 2){
 			if(currentTargetIndex >= this.enemieslist.Count){
 				GD.Print($"{currentTargetIndex} >= {this.allylist.Count}");
@@ -473,14 +473,7 @@ public partial class MenuBatalla : Control
 			selectingTarget = false;
 			flecha.ShowArrow(false);
 			ChangeMenu(-1);
-			battle_access.prepareDialog(actor, mov_actual);
-			/*
-			mov_actual.efecto();
-			mov_actual.erraseTarget();
-			selectingTarget = false;
-			flecha.ShowArrow(false);
-			ChangeMenu(0);
-			*/
+			customSignals.EmitSignal(nameof(CustomSignals.OnBattleMove),actor,mov_actual);
 		}
 		else{
 			indexes[currentTargetIndex] = true;

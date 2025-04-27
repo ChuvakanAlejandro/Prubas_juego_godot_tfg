@@ -25,6 +25,7 @@ public partial class VylsMovimiento3 : Movimiento{
 			}
 		}else
 			this.objetivos[0].passData().estadoManager.Reinicio_efecto();
+		this.objetivos[0].ActualizarIconosEstado();
 	}
 	
 	public override string giveTitulo(){
